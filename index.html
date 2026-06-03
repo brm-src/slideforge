@@ -3,467 +3,913 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SlideForge</title>
+<title>SlideForge — Presentaciones profesionales, 100% locales</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --paper:    oklch(13% 0.018 30);
-  --paper-1:  oklch(16% 0.020 30);
-  --paper-2:  oklch(19% 0.022 30);
-  --ink:      oklch(85% 0.010 30);
-  --ink-soft: oklch(65% 0.012 30);
-  --ink-mute: oklch(48% 0.010 30);
-  --rule:     oklch(25% 0.015 30);
-  --accent:   oklch(52% 0.18 25);
-  --accent-s: oklch(58% 0.14 25);
-
-  --font-display: "Newsreader", ui-serif, Georgia, serif;
-  --font-body:    "Inter Tight", ui-sans-serif, system-ui, sans-serif;
-  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
-
-  --text-xs:  0.64rem;
-  --text-sm:  0.8rem;
-  --text-base: 1rem;
-  --text-md:   1.25rem;
-  --text-lg:   1.5625rem;
-  --text-xl:   1.9531rem;
-  --text-2xl:  2.4414rem;
-  --text-3xl:  3.0518rem;
-  --text-display: clamp(2.5rem, 5vw + 1rem, 4.5rem);
-
-  --max-w: 80ch;
-  --page-w: 1200px;
+  --bg:       #f7f6f2;
+  --bg-card:  #eeece6;
+  --bg-green: #1a7a5a;
+  --bg-green-light: #22a075;
+  --text:     #1a1a1a;
+  --text-soft:#5a5a5a;
+  --text-inv: #ffffff;
+  --rule:     #e0ddd6;
+  --radius:   12px;
+  --radius-lg: 16px;
+  --radius-pill: 9999px;
+  --max-w:    1100px;
+  --font:     'Inter', system-ui, -apple-system, sans-serif;
 }
 
-html { font-size: 16px; }
+html { font-size: 16px; scroll-behavior: smooth; }
 
 body {
-  font-family: var(--font-body);
-  font-weight: 300;
-  color: var(--ink);
-  background: var(--paper);
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
 }
 
-a { color: inherit; }
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
 
-/* ── Masthead ── */
+/* ── Nav ── */
 
-.mast {
+.nav {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid var(--rule);
-  max-width: var(--page-w);
-  margin: 0 auto;
 }
 
-.mast__brand {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: var(--text-lg);
+.nav__brand {
+  font-weight: 700;
+  font-size: 1.05rem;
   letter-spacing: -0.02em;
-}
-
-.mast__brand em {
-  font-weight: 300;
-  color: var(--ink-mute);
-}
-
-.mast__nav {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-
-/* ── Layout ── */
-
-.page {
-  max-width: var(--page-w);
-  margin: 0 auto;
-}
-
-.section {
-  padding: 4rem 1.5rem 3.5rem;
-  border-bottom: 1px solid var(--rule);
-}
-
-.section:last-child { border-bottom: none; }
-
-.section__label {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: 1.5rem;
-}
-
-/* ── Hero ── */
-
-.hero {
-  padding: 6rem 1.5rem 5rem;
-  max-width: var(--page-w);
-  margin: 0 auto;
-}
-
-.hero__eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent-s);
-  margin-bottom: 1.25rem;
-}
-
-.hero__title {
-  font-family: var(--font-display);
-  font-size: var(--text-display);
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  max-width: 14ch;
-  margin-bottom: 1.5rem;
-}
-
-.hero__title em {
-  font-style: italic;
-  font-weight: 400;
-  color: var(--accent-s);
-}
-
-.hero__lede {
-  font-family: var(--font-display);
-  font-size: var(--text-md);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--ink-soft);
-  max-width: 50ch;
-  line-height: 1.5;
-  margin-bottom: 2.5rem;
-}
-
-.hero__cta {
   display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-/* ── Buttons ── */
-
-.btn {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.75rem 1.75rem;
-  border-radius: 9999px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  border: 1px solid transparent;
-  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.btn--primary {
-  background: var(--accent);
-  color: var(--paper);
-  border-color: var(--accent);
+.nav__brand-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--bg-green);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.85rem;
 }
 
-.btn--primary:hover {
-  background: transparent;
-  color: var(--accent-s);
-}
-
-.btn--ghost {
-  background: transparent;
-  color: var(--ink-mute);
-  border-color: var(--rule);
-}
-
-.btn--ghost:hover {
-  border-color: var(--ink-mute);
-  color: var(--ink);
-}
-
-.link-arrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  text-decoration: none;
-  border-bottom: 1px solid var(--rule);
-  padding-bottom: 2px;
-  transition: color 0.15s;
-}
-
-.link-arrow:hover {
-  color: var(--accent-s);
-  border-color: var(--accent);
-}
-
-/* ── Feature list ── */
-
-.features {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-
-.feature {
-  padding: 2rem 0;
-  border-bottom: 1px solid var(--rule);
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 2rem;
-  align-items: start;
-}
-
-.feature:last-child { border-bottom: none; }
-
-.feature__num {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
+.nav__links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.875rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  color: var(--text-soft);
+}
+
+.nav__links a:hover { color: var(--text); }
+
+/* ─ Hero ── */
+
+.hero {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+.hero__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero__content { max-width: 480px; }
+
+.hero__title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+
+.hero__title span { color: var(--bg-green); }
+
+.hero__lede {
+  font-size: 1.05rem;
+  color: var(--text-soft);
+  line-height: 1.55;
+  margin-bottom: 1.75rem;
+}
+
+.hero__form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.hero__input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid var(--rule);
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-family: var(--font);
+  background: white;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.hero__input:focus { border-color: var(--bg-green); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: var(--bg-green);
+  color: var(--text-inv);
+}
+
+.btn--primary:hover { background: var(--bg-green-light); }
+
+.btn--dark {
+  background: var(--text);
+  color: var(--text-inv);
+}
+
+.btn--dark:hover { opacity: 0.85; }
+
+/* ── Logos strip ── */
+
+.logos {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.logos__label {
+  font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
-  color: var(--ink-mute);
-  padding-top: 0.15rem;
-  min-width: 3ch;
+  letter-spacing: 0.1em;
+  color: var(--text-soft);
 }
 
-.feature__title {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.5rem;
+.logos__row {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
 }
 
-.feature__title em {
-  font-style: italic;
-  color: var(--accent-s);
+.logos__item {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-soft);
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
-.feature__body {
-  font-size: var(--text-sm);
-  color: var(--ink-soft);
-  line-height: 1.6;
-  max-width: 55ch;
+/* ── Hero image ── */
+
+.hero__image {
+  max-width: var(--max-w);
+  margin: 0 auto 3rem;
+  padding: 0 1.5rem;
 }
 
-/* ── Stats strip ── */
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
+.hero__image-inner {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.stat {
-  padding: 2rem 0;
-  border-right: 1px solid var(--rule);
-  text-align: center;
+.hero__mock {
+  width: 280px;
+  height: 560px;
+  background: #1a1a1a;
+  border-radius: 32px;
+  border: 4px solid #333;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
 }
 
-.stat:last-child { border-right: none; }
+.hero__mock-screen {
+  position: absolute;
+  inset: 8px;
+  border-radius: 26px;
+  background: linear-gradient(160deg, #1a7a5a 0%, #0d4030 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 1.25rem 1.25rem;
+}
 
-.stat__value {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--ink);
+.hero__mock-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 24px;
+  background: #1a1a1a;
+  border-radius: 0 0 16px 16px;
+  z-index: 2;
+}
+
+.hero__mock-content {
+  color: white;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero__mock-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  opacity: 0.8;
   margin-bottom: 0.25rem;
 }
 
-.stat__label {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.14em;
+.hero__mock-heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.hero__mock-card {
+  background: rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 0.75rem;
+  backdrop-filter: blur(10px);
+}
+
+.hero__mock-card-label {
+  font-size: 0.55rem;
   text-transform: uppercase;
-  color: var(--ink-mute);
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+  margin-bottom: 0.35rem;
 }
 
-/* ── Manifesto band ── */
-
-.band {
-  background: var(--accent);
-  color: var(--paper);
-  padding: 3rem 1.5rem;
-  text-align: center;
+.hero__mock-card-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
-.band__text {
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.4;
+.hero__mock-dots {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.hero__mock-dot {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.2);
+}
+
+.hero__mock-dot--active {
+  background: rgba(255,255,255,0.7);
+  width: 40px;
+}
+
+/* ─ Sections ── */
+
+.section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.section__header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem 2rem;
+  margin-bottom: 3rem;
+  align-items: baseline;
+}
+
+.section__num {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--bg-green);
+  background: rgba(26,122,90,0.08);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-pill);
+  width: fit-content;
+}
+
+.section__title {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  max-width: 28ch;
+}
+
+.section__desc {
+  grid-column: 1 / -1;
+  font-size: 0.95rem;
+  color: var(--text-soft);
   max-width: 55ch;
+  line-height: 1.6;
+}
+
+/* ── Feature grid ── */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: transform 0.15s;
+}
+
+.feature-card:hover { transform: translateY(-2px); }
+
+.feature-card__icon {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-green);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.feature-card__title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.feature-card__body {
+  font-size: 0.825rem;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+/* ── Feature row (alternating) ── */
+
+.feature-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.feature-row--reverse { direction: rtl; }
+.feature-row--reverse > * { direction: ltr; }
+
+.feature-row__text h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.feature-row__text p {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.feature-row__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  color: var(--text-soft);
+  border: 1px solid var(--rule);
+}
+
+.tag--green {
+  background: rgba(26,122,90,0.08);
+  color: var(--bg-green);
+  border-color: transparent;
+}
+
+.feature-row__visual {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.feature-row__visual--green {
+  background: var(--bg-green);
+  position: relative;
+}
+
+.visual-slide {
+  width: 80%;
+  height: 75%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.visual-slide__bar {
+  height: 6px;
+  border-radius: 3px;
+  background: #e8e6e0;
+}
+
+.visual-slide__bar--short { width: 40%; }
+.visual-slide__bar--med { width: 70%; }
+.visual-slide__bar--green { background: var(--bg-green); }
+.visual-slide__bar--long { width: 100%; }
+
+.visual-slide__title {
+  height: 12px;
+  width: 55%;
+  background: var(--text);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+.visual-slide__blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+.visual-slide__block {
+  height: 36px;
+  background: #f0eee8;
+  border-radius: 6px;
+}
+
+.visual-slide__block--accent {
+  background: var(--bg-green);
+  opacity: 0.3;
+}
+
+/* ── Testimonial ── */
+
+.testimonial {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  max-width: 600px;
   margin: 0 auto;
 }
+
+.testimonial__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-card);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+  margin-bottom: 1.25rem;
+}
+
+.testimonial__pill-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--bg-green);
+  border-radius: 50%;
+}
+
+.testimonial__quote {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.testimonial__author {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.testimonial__role {
+  font-size: 0.75rem;
+  color: var(--text-soft);
+}
+
+/* ── CTA band ── */
+
+.cta-band {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+.cta-band__inner {
+  background: var(--bg-green);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.cta-band__text {
+  color: var(--text-inv);
+}
+
+.cta-band__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.35rem;
+}
+
+.cta-band__desc {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.btn--white {
+  background: white;
+  color: var(--bg-green);
+  font-weight: 700;
+}
+
+.btn--white:hover { opacity: 0.9; }
 
 /* ── Footer ── */
 
 .footer {
-  max-width: var(--page-w);
+  max-width: var(--max-w);
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--rule);
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
 .footer__copy {
-  font-size: var(--text-xs);
-  color: var(--ink-mute);
+  font-size: 0.8rem;
+  color: var(--text-soft);
 }
 
 .footer__links {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .footer__links a {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  text-decoration: none;
+  font-size: 0.8rem;
+  color: var(--text-soft);
   transition: color 0.15s;
 }
 
-.footer__links a:hover { color: var(--accent-s); }
+.footer__links a:hover { color: var(--text); }
 
 /* ── Mobile ── */
 
-@media (max-width: 640px) {
-  .hero { padding: 4rem 1.25rem 3rem; }
-  .section { padding: 3rem 1.25rem 2.5rem; }
-  .feature { grid-template-columns: 1fr; gap: 0.5rem; }
-  .stats { grid-template-columns: 1fr; }
-  .stat { border-right: none; border-bottom: 1px solid var(--rule); padding: 1.5rem 0; }
-  .stat:last-child { border-bottom: none; }
-  .footer { flex-direction: column; align-items: flex-start; }
+@media (max-width: 768px) {
+  .feature-row { grid-template-columns: 1fr; gap: 2rem; }
+  .feature-row--reverse { direction: ltr; }
+  .section__header { grid-template-columns: 1fr; gap: 0.5rem; }
+  .cta-band__inner { flex-direction: column; text-align: center; padding: 2.5rem 1.5rem; }
+  .hero__form { flex-direction: column; }
+  .logos { flex-direction: column; align-items: flex-start; gap: 1rem; }
 }
+
+/* ── Animations ── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero__content { animation: fadeUp 0.6s ease both; }
+.hero__image { animation: fadeUp 0.6s ease 0.15s both; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.hero__mock-dot--active { animation: pulse 2s ease infinite; }
 </style>
 </head>
 <body>
 
-<header class="mast">
-  <div class="mast__brand">Slide<em>Forge</em></div>
-  <nav class="mast__nav">100% local</nav>
-</header>
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav__brand">
+    <div class="nav__brand-icon">⬡</div>
+    SlideForge
+  </div>
+  <div class="nav__links">
+    <a href="#como">Cómo funciona</a>
+    <a href="https://ko-fi.com/brmcl" target="_blank"> Apoyar</a>
+    <a href="https://github.com/brm-src/slideforge" target="_blank">GitHub</a>
+  </div>
+</nav>
 
-<div class="page">
-
-  <!-- Hero -->
-  <section class="hero">
-    <p class="hero__eyebrow">Presentaciones con identidad institucional</p>
-    <h1 class="hero__title">Tus datos <em>nunca</em> salen de tu navegador</h1>
-    <p class="hero__lede">Crea, edita y exporta diapositivas pixel-perfect sin subir nada a ningún servidor. Tu plantilla, tu contenido, tu máquina.</p>
-    <div class="hero__cta">
-      <a class="btn btn--primary" href="#editor" onclick="startApp(); return false;">Abrir editor →</a>
-      <a class="link-arrow" href="#features" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'}); return false;">Cómo funciona</a>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero__top">
+    <div class="hero__content">
+      <h1 class="hero__title">Presentaciones profesionales, <span>100% locales.</span></h1>
+      <p class="hero__lede">Crea, edita y exporta diapositivas pixel-perfect sin subir nada a ningún servidor. Tu plantilla, tu contenido, tu máquina.</p>
+      <div class="hero__form">
+        <input class="hero__input" type="text" placeholder="Tu email" />
+        <button class="btn btn--dark">Empezar gratis</button>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Stats -->
-  <section class="stats">
-    <div class="stat">
-      <div class="stat__value">0</div>
-      <div class="stat__label">Servidores</div>
-    </div>
-    <div class="stat">
-      <div class="stat__value">∞</div>
-      <div class="stat__label">Plantillas</div>
-    </div>
-    <div class="stat">
-      <div class="stat__value">PNG</div>
-      <div class="stat__label">Exportación</div>
-    </div>
-  </section>
+<!-- Logos -->
+<div class="logos">
+  <span class="logos__label">Usado por</span>
+  <div class="logos__row">
+    <span class="logos__item">◆ Tesis</span>
+    <span class="logos__item">◆ Corporativo</span>
+    <span class="logos__item">◆ Academia</span>
+    <span class="logos__item">◆ Freelance</span>
+    <span class="logos__item">◆ Startups</span>
+  </div>
+</div>
 
-  <!-- Features -->
-  <section class="section" id="features">
-    <div class="features">
-
-      <div class="feature">
-        <span class="feature__num">01</span>
-        <div>
-          <h2 class="feature__title">Sube tu <em>plantilla</em></h2>
-          <p class="feature__body">Arrastra las imágenes de fondo de tu diapositiva — portada, contenido, cierre. SlideForge las convierte local, sin red, sin nube.</p>
+<!-- Hero image -->
+<div class="hero__image">
+  <div class="hero__image-inner">
+    <div class="hero__mock">
+      <div class="hero__mock-notch"></div>
+      <div class="hero__mock-screen">
+        <div class="hero__mock-content">
+          <div>
+            <div class="hero__mock-title">SLIDE 04 / 12</div>
+            <div class="hero__mock-heading">Resultados del análisis</div>
+            <div class="hero__mock-card">
+              <div class="hero__mock-card-label">Distribución regional</div>
+              <div class="hero__mock-card-title">Zona norte: 67% cobertura</div>
+            </div>
+          </div>
+          <div class="hero__mock-dots">
+            <div class="hero__mock-dot"></div>
+            <div class="hero__mock-dot hero__mock-dot--active"></div>
+            <div class="hero__mock-dot"></div>
+          </div>
         </div>
       </div>
-
-      <div class="feature">
-        <span class="feature__num">02</span>
-        <div>
-          <h2 class="feature__title">Define tu <em>contenido</em></h2>
-          <p class="feature__body">Título y cuerpo por diapositiva. O importa un CSV. Tú decides cuántas y en qué orden.</p>
-        </div>
-      </div>
-
-      <div class="feature">
-        <span class="feature__num">03</span>
-        <div>
-          <h2 class="feature__title">Edita <em>en vivo</em></h2>
-          <p class="feature__body">Texto editable directamente sobre la diapositiva. Lo que ves es lo que exportas — sin sorpresas al pasar a PowerPoint.</p>
-        </div>
-      </div>
-
-      <div class="feature">
-        <span class="feature__num">04</span>
-        <div>
-          <h2 class="feature__title">Exporta a <em>PNG</em></h2>
-          <p class="feature__body">Un clic por diapositiva, resolución exacta 4:3 o 16:9. Pégala directo en tu presentación.</p>
-        </div>
-      </div>
-
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- Manifesto band -->
-  <section class="band">
-    <p class="band__text">Hecho para quienes necesitan presentations profesionales sin confiar en un servidor ajeno.</p>
-  </section>
+<!-- Section: Problem / Solution -->
+<section class="section" id="como">
+  <div class="section__header">
+    <span class="section__num">00 — Problema</span>
+    <h2 class="section__title">Hacer presentaciones con identidad institucional es un dolor.</h2>
+    <p class="section__desc">Las herramientas online suben tus datos a sus servidores. PowerPoint no respeta tus plantillas. Y exportar a PNG siempre sale distinto a lo que ves en pantalla.</p>
+  </div>
 
+  <div class="section__header" style="margin-top: 3rem;">
+    <span class="section__num">01 — Solución</span>
+    <h2 class="section__title">Un editor que vive en tu navegador y no sale de ahí.</h2>
+    <p class="section__desc">SlideForge procesa todo local. Tu plantilla, tu contenido, tu exportación. Cero red, cero servidor, cero riesgo.</p>
+  </div>
+</section>
+
+<!-- Section: Features -->
+<section class="section">
+  <div class="section__header">
+    <span class="section__num">02 — Funciones</span>
+    <h2 class="section__title">Todo lo que necesitas para armar tu deck.</h2>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-card__icon">📁</div>
+      <div class="feature-card__title">Sube tu plantilla</div>
+      <div class="feature-card__body">Arrastra las imágenes de fondo — portada, contenido, cierre. Se procesan local.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon">️</div>
+      <div class="feature-card__title">Edita en vivo</div>
+      <div class="feature-card__body">Texto editable directamente sobre la diapositiva. Lo que ves es lo que exportas.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon">📐</div>
+      <div class="feature-card__title">Exporta a PNG</div>
+      <div class="feature-card__body">Un clic por slide, resolución exacta 4:3 o 16:9. Pégala directo en PowerPoint.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon">📊</div>
+      <div class="feature-card__title">Importa CSV</div>
+      <div class="feature-card__body">Define todas tus slides de una vez con un archivo de texto. Título, cuerpo, tipo.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon">🔒</div>
+      <div class="feature-card__title">Privacidad total</div>
+      <div class="feature-card__body">Nada sale de tu máquina. Ideal para tesis, datos sensibles, contenido corporativo.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card__icon"></div>
+      <div class="feature-card__title">Cualquier plantilla</div>
+      <div class="feature-card__body">Universidades, empresas, gobiernos — usá la identidad visual que necesites.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Section: How it works (feature rows) -->
+<section class="section">
+  <div class="section__header">
+    <span class="section__num">03 — Cómo funciona</span>
+    <h2 class="section__title">De plantilla a presentación en minutos.</h2>
+  </div>
+
+  <div class="feature-row">
+    <div class="feature-row__text">
+      <h3>1. Subí tus fondos</h3>
+      <p>Arrastrá las imágenes de tu plantilla institucional — portada, slides de contenido, slide de cierre. SlideForge las convierte y cachea local.</p>
+      <div class="feature-row__tags">
+        <span class="tag tag--green">JPG / PNG</span>
+        <span class="tag">Sin límite de tamaño</span>
+        <span class="tag">CMYK → RGB automático</span>
+      </div>
+    </div>
+    <div class="feature-row__visual feature-row__visual--green">
+      <div class="visual-slide">
+        <div class="visual-slide__bar visual-slide__bar--short"></div>
+        <div class="visual-slide__bar visual-slide__bar--med"></div>
+        <div class="visual-slide__bar visual-slide__bar--green"></div>
+        <div class="visual-slide__title"></div>
+        <div class="visual-slide__blocks">
+          <div class="visual-slide__block"></div>
+          <div class="visual-slide__block visual-slide__block--accent"></div>
+          <div class="visual-slide__block"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 3rem;"></div>
+
+  <div class="feature-row feature-row--reverse">
+    <div class="feature-row__text">
+      <h3>2. Definí tu contenido</h3>
+      <p>Cargá título y cuerpo por diapositiva, o importá un CSV con todo tu deck. SlideForge arma la estructura automáticamente.</p>
+      <div class="feature-row__tags">
+        <span class="tag tag--green">CSV</span>
+        <span class="tag">Manual slide por slide</span>
+        <span class="tag">4:3 o 16:9</span>
+      </div>
+    </div>
+    <div class="feature-row__visual">
+      <div class="visual-slide">
+        <div class="visual-slide__title" style="width: 40%;"></div>
+        <div class="visual-slide__bar visual-slide__bar--long"></div>
+        <div class="visual-slide__bar visual-slide__bar--med"></div>
+        <div class="visual-slide__bar visual-slide__bar--short"></div>
+        <div class="visual-slide__blocks">
+          <div class="visual-slide__block visual-slide__block--accent"></div>
+          <div class="visual-slide__block"></div>
+          <div class="visual-slide__block visual-slide__block--accent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 3rem;"></div>
+
+  <div class="feature-row">
+    <div class="feature-row__text">
+      <h3>3. Editá y exportá</h3>
+      <p>Editá el texto directamente sobre cada diapositiva. Cuando estés listo, exportá a PNG con un clic — resolución exacta, pixel-perfect.</p>
+      <div class="feature-row__tags">
+        <span class="tag tag--green">Contenteditable</span>
+        <span class="tag">PNG 1500×1125</span>
+        <span class="tag">WYSIWYG</span>
+      </div>
+    </div>
+    <div class="feature-row__visual feature-row__visual--green">
+      <div class="visual-slide">
+        <div class="visual-slide__bar visual-slide__bar--green visual-slide__bar--short"></div>
+        <div class="visual-slide__title" style="width: 60%;"></div>
+        <div class="visual-slide__bar visual-slide__bar--med"></div>
+        <div class="visual-slide__bar visual-slide__bar--short"></div>
+        <div class="visual-slide__blocks">
+          <div class="visual-slide__block"></div>
+          <div class="visual-slide__block"></div>
+          <div class="visual-slide__block visual-slide__block--accent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<div class="testimonial">
+  <div class="testimonial__pill">
+    <span class="testimonial__pill-dot"></span>
+    Usado en tesis
+  </div>
+  <p class="testimonial__quote">"SlideForge me salvó la defensa de tesis. Pude usar la plantilla exacta de mi universidad sin subir mis datos a ningún servidor."</p>
+  <p class="testimonial__author">Cristian</p>
+  <p class="testimonial__role">Investigador independiente</p>
+</div>
+
+<!-- CTA band -->
+<div class="cta-band">
+  <div class="cta-band__inner">
+    <div class="cta-band__text">
+      <div class="cta-band__title">Empezá a crear sin riesgos.</div>
+      <div class="cta-band__desc">Abrí el editor en tu navegador. No requiere instalación.</div>
+    </div>
+    <button class="btn btn--white" onclick="startApp(); return false;">Abrir editor →</button>
+  </div>
 </div>
 
 <!-- Footer -->
 <footer class="footer">
   <div class="footer__copy">SlideForge · Hecho con cuidado</div>
   <div class="footer__links">
-    <a href="https://ko-fi.com/brmcl" target="_blank" rel="noopener">☕ Apoyar</a>
-    <a href="https://github.com/brm-src/slideforge" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://ko-fi.com/brmcl" target="_blank">☕ Apoyar</a>
+    <a href="https://github.com/brm-src/slideforge" target="_blank">GitHub</a>
+    <a href="#">Privacidad</a>
   </div>
 </footer>
 
 <script>
 function startApp() {
-  alert('Editor — próximamente. Por ahora abre index.html local.');
+  alert('Editor — próximamente. Por ahora abrí index.html local.');
 }
 </script>
 
