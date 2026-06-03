@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SlideForge — Presentaciones profesionales, 100% locales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface-2: #1a1a24;
+  --border: #2a2a3a;
+  --text: #e4e4ed;
+  --text-muted: #8888a0;
+  --accent: #6c5ce7;
+  --accent-light: #a29bfe;
+  --success: #00b894;
+  --warning: #fdcb6e;
+  --danger: #e17055;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+/* Landing */
+#landing { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; }
+#landing h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 900; letter-spacing: -0.04em; margin-bottom: 24px; background: linear-gradient(135deg, var(--accent-light), var(--accent), #00b894); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#landing .subtitle { font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin-bottom: 40px; }
+#landing .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; max-width: 800px; margin-bottom: 48px; }
+#landing .feature { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: left; }
+#landing .feature h3 { font-size: 1.1rem; margin-bottom: 8px; }
+#landing .feature p { font-size: 0.9rem; color: var(--text-muted); }
+#landing .cta { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: var(--radius); font-weight: 700; font-size: 1rem; border: none; cursor: pointer; transition: var(--transition); }
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+.btn-secondary { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--accent); }
+.btn-success { background: var(--success); color: white; }
+.btn-danger { background: var(--danger); color: white; }
+.btn-sm { padding: 8px 16px; font-size: 0.875rem; }
+
+/* App Layout */
+#app { display: none; min-height: 100vh; }
+#app.active { display: grid; grid-template-columns: 280px 1fr; }
+
+/* Sidebar */
+#sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+#sidebar h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 8px; }
+.step { padding: 12px 16px; border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); border: 2px solid transparent; }
+.step:hover { background: var(--surface-2); }
+.step.active { background: var(--surface-2); border-color: var(--accent); }
+.step .step-num { font-size: 0.75rem; font-weight: 700; color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.1em; }
+.step .step-title { font-size: 0.95rem; font-weight: 600; margin-top: 4px; }
+
+/* Main Content */
+#main { padding: 24px; overflow-y: auto; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 24px; }
+.panel h3 { font-size: 1.1rem; margin-bottom: 16px; }
+
+/* Step Content */
+.step-content { display: none; }
+.step-content.active { display: block; }
+
+/* Template Upload */
+#template-upload { border: 2px dashed var(--border); border-radius: var(--radius); padding: 40px; text-align: center; cursor: pointer; transition: var(--transition); }
+#template-upload:hover { border-color: var(--accent); }
+#template-upload.dragover { border-color: var(--accent); background: rgba(108, 92, 231, 0.1); }
+#template-upload .icon { font-size: 3rem; margin-bottom: 16px; }
+
+/* Slide List */
+#slide-list { display: flex; flex-direction: column; gap: 12px; }
+.slide-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--surface-2); border-radius: var(--radius-sm); border: 1px solid var(--border); cursor: pointer; transition: var(--transition); }
+.slide-item:hover { border-color: var(--accent); }
+.slide-item.active { border-color: var(--accent); background: rgba(108, 92, 231, 0.1); }
+.slide-item .slide-thumb { width: 60px; height: 45px; background: var(--bg); border-radius: 4px; flex-shrink: 0; }
+.slide-item .slide-info { flex: 1; }
+.slide-item .slide-title { font-weight: 600; font-size: 0.9rem; }
+.slide-item .slide-type { font-size: 0.75rem; color: var(--text-muted); }
+
+/* Editor */
+#editor-container { display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
+#slide-preview { background: var(--bg); border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; position: relative; }
+#slide-canvas { width: 100%; height: 100%; position: relative; }
+#slide-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+#slide-content { position: absolute; inset: 60px; display: flex; flex-direction: column; }
+#slide-title { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 800; margin-bottom: 16px; outline: none; padding: 8px; border-radius: 4px; }
+#slide-title:hover, #slide-title:focus { background: rgba(108, 92, 231, 0.1); }
+#slide-body { flex: 1; font-size: clamp(1rem, 2vw, 1.25rem); outline: none; padding: 8px; border-radius: 4px; line-height: 1.5; }
+#slide-body:hover, #slide-body:focus { background: rgba(108, 92, 231, 0.1); }
+
+#slide-settings { display: flex; flex-direction: column; gap: 16px; }
+.setting-group { display: flex; flex-direction: column; gap: 8px; }
+.setting-group label { font-size: 0.875rem; font-weight: 600; }
+.setting-group input, .setting-group select, .setting-group textarea { padding: 10px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 0.9rem; }
+.setting-group input:focus, .setting-group select:focus, .setting-group textarea:focus { outline: none; border-color: var(--accent); }
+
+/* Export */
+#export-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.export-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center; cursor: pointer; transition: var(--transition); }
+.export-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.export-card .icon { font-size: 2.5rem; margin-bottom: 12px; }
+.export-card h4 { font-size: 1rem; margin-bottom: 8px; }
+.export-card p { font-size: 0.875rem; color: var(--text-muted); }
+
+/* Progress */
+#progress { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
+#progress.active { display: flex; }
+#progress .modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; text-align: center; max-width: 400px; }
+#progress .spinner { width: 48px; height: 48px; border: 4px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 24px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Responsive */
+@media (max-width: 768px) {
+  #app.active { grid-template-columns: 1fr; }
+  #sidebar { display: none; }
+  #editor-container { grid-template-columns: 1fr; }
+}
+
+/* Hidden file input */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- Landing Page -->
+<div id="landing">
+  <h1>SlideForge</h1>
+  <p class="subtitle">Presentaciones profesionales con tu identidad institucional. Sin subir tus datos a ningún servidor. Todo corre en tu navegador.</p>
+  <div class="features">
+    <div class="feature">
+      <h3>🔒 100% Local</h3>
+      <p>Tus diapositivas, datos y plantillas nunca salen de tu dispositivo. Zero riesgo de fuga.</p>
+    </div>
+    <div class="feature">
+      <h3>🎨 Tu Identidad</h3>
+      <p>Sube tus plantillas institucionales. El editor se adapta a tu marca, colores y tipografía.</p>
+    </div>
+    <div class="feature">
+      <h3>📐 Exportación Perfecta</h3>
+      <p>PNG en 4:3 o 16:9, listo para pegar en PowerPoint. Pixel-perfect, sin deformaciones.</p>
+    </div>
+  </div>
+  <div class="cta">
+    <button class="btn btn-primary" onclick="startApp()">Crear presentación</button>
+    <button class="btn btn-secondary" onclick="loadDemo()">Ver demo</button>
+  </div>
+  <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border);">
+    <a href="https://coff.ee/crisaravena" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); text-decoration: none; font-size: 0.875rem; transition: var(--transition);">
+            <span style="font-size: 1.25rem;">☕</span>
+            <span>Apoyar este proyecto</span>
+          </a>
+  </div>
+  </div>
+
+<!-- App -->
+<div id="app">
+  <div id="sidebar">
+    <h2>SlideForge</h2>
+    <div class="step active" data-step="1" onclick="goToStep(1)">
+      <div class="step-num">Paso 1</div>
+      <div class="step-title">Plantilla</div>
+    </div>
+    <div class="step" data-step="2" onclick="goToStep(2)">
+      <div class="step-num">Paso 2</div>
+      <div class="step-title">Contenido</div>
+    </div>
+    <div class="step" data-step="3" onclick="goToStep(3)">
+      <div class="step-num">Paso 3</div>
+      <div class="step-title">Editor</div>
+    </div>
+    <div class="step" data-step="4" onclick="goToStep(4)">
+      <div class="step-num">Paso 4</div>
+      <div class="step-title">Exportar</div>
+    </div>
+    <div style="flex: 1;"></div>
+    <button class="btn btn-secondary btn-sm" onclick="backToLanding()">← Volver</button>
+  </div>
+
+  <div id="main">
+    <!-- Step 1: Template -->
+    <div class="step-content active" id="step-1">
+      <div class="panel">
+        <h3>Sube tu plantilla institucional</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Arrastra o selecciona las imágenes de fondo de tu presentación. Puedes subir portada, contenido y cierre por separado.</p>
+        <div id="template-upload" onclick="document.getElementById('template-input').click()">
+          <div class="icon">📁</div>
+          <p><strong>Arrastra imágenes aquí</strong> o haz clic para seleccionar</p>
+          <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: 8px;">PNG, JPG o WebP — Máx 10MB por archivo</p>
+        </div>
+        <input type="file" id="template-input" class="hidden" accept="image/*" multiple onchange="handleTemplateUpload(event)">
+      </div>
+      <div id="template-preview" style="display: none;">
+        <div class="panel">
+          <h3>Plantillas cargadas</h3>
+          <div id="template-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px;"></div>
+        </div>
+        <div style="display: flex; gap: 12px; margin-top: 16px;">
+          <button class="btn btn-primary" onclick="goToStep(2)">Continuar →</button>
+          <button class="btn btn-secondary" onclick="clearTemplates()">Limpiar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Content -->
+    <div class="step-content" id="step-2">
+      <div class="panel">
+        <h3>Define tus diapositivas</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Agrega el contenido de cada slide. Puedes elegir entre diferentes tipos de layout.</p>
+        <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+          <button class="btn btn-primary btn-sm" onclick="addSlide('title')">+ Título</button>
+          <button class="btn btn-secondary btn-sm" onclick="addSlide('content')">+ Contenido</button>
+          <button class="btn btn-secondary btn-sm" onclick="addSlide('comparison')">+ Comparación</button>
+          <button class="btn btn-secondary btn-sm" onclick="addSlide('data')">+ Datos</button>
+          <button class="btn btn-secondary btn-sm" onclick="addSlide('close')">+ Cierre</button>
+        </div>
+        <div id="slide-list"></div>
+      </div>
+      <div style="display: flex; gap: 12px; margin-top: 16px;">
+        <button class="btn btn-secondary" onclick="goToStep(1)">← Anterior</button>
+        <button class="btn btn-primary" onclick="goToStep(3)">Editar →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Editor -->
+    <div class="step-content" id="step-3">
+      <div id="editor-container">
+        <div>
+          <div id="slide-preview">
+            <div id="slide-canvas">
+              <div id="slide-bg"></div>
+              <div id="slide-content">
+                <div id="slide-title" contenteditable="true">Título de la diapositiva</div>
+                <div id="slide-body" contenteditable="true">Contenido editable...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="slide-settings">
+          <div class="setting-group">
+            <label>Tipo de slide</label>
+            <select id="slide-type" onchange="updateSlideType()">
+              <option value="title">Título</option>
+              <option value="content">Contenido</option>
+              <option value="comparison">Comparación</option>
+              <option value="data">Datos</option>
+              <option value="close">Cierre</option>
+            </select>
+          </div>
+          <div class="setting-group">
+            <label>Fondo</label>
+            <select id="slide-bg-select" onchange="updateSlideBg()">
+              <option value="content">Contenido</option>
+              <option value="cover">Portada</option>
+              <option value="close">Cierre</option>
+            </select>
+          </div>
+          <div class="setting-group">
+            <label>Proporción</label>
+            <select id="slide-ratio" onchange="updateRatio()">
+              <option value="4:3">4:3 (Estándar)</option>
+              <option value="16:9">16:9 (Widescreen)</option>
+            </select>
+          </div>
+          <div style="flex: 1;"></div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" onclick="prevSlide()">← Anterior</button>
+            <button class="btn btn-secondary btn-sm" onclick="nextSlide()">Siguiente →</button>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; margin-top: 16px;">
+        <button class="btn btn-secondary" onclick="goToStep(2)">← Anterior</button>
+        <button class="btn btn-primary" onclick="goToStep(4)">Exportar →</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Export -->
+    <div class="step-content" id="step-4">
+      <div class="panel">
+        <h3>Exportar diapositivas</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px;">Descarga tus slides como imágenes PNG listas para usar en PowerPoint.</p>
+        <div id="export-options">
+          <div class="export-card" onclick="exportCurrent()">
+            <div class="icon">📄</div>
+            <h4>Slide actual</h4>
+            <p>Descarga solo la diapositiva que estás viendo</p>
+          </div>
+          <div class="export-card" onclick="exportAll()">
+            <div class="icon">📦</div>
+            <h4>Todas las slides</h4>
+            <p>Descarga todas las diapositivas como PNG</p>
+          </div>
+          <div class="export-card" onclick="exportPDF()">
+            <div class="icon">📋</div>
+            <h4>PDF</h4>
+            <p>Genera un PDF con todas las slides</p>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; margin-top: 16px;">
+        <button class="btn btn-secondary" onclick="goToStep(3)">← Anterior</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Progress Modal -->
+<div id="progress">
+  <div class="modal">
+    <div class="spinner"></div>
+    <p id="progress-text">Procesando...</p>
+  </div>
+</div>
+
+<!-- Pyodide -->
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+<script>
+// App State
+const state = {
+  templates: { cover: null, content: null, close: null },
+  slides: [],
+  currentSlide: 0,
+  currentStep: 1,
+  ratio: '4:3',
+  pyodide: null,
+  pyodideReady: false
+};
+
+// Initialize Pyodide
+async function initPyodide() {
+  if (state.pyodideReady) return;
+  try {
+    state.pyodide = await loadPyodide();
+    await state.pyodide.loadPackagesFromImports(`
+from PIL import Image
+import io
+import base64
+`);
+    state.pyodideReady = true;
+    console.log('Pyodide loaded');
+  } catch (e) {
+    console.warn('Pyodide failed to load, using fallback:', e);
+  }
+}
+
+// Start Pyodide on app load
+document.addEventListener('DOMContentLoaded', initPyodide);
+
+// Landing
+function startApp() {
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('app').classList.add('active');
+}
+
+function backToLanding() {
+  document.getElementById('app').classList.remove('active');
+  document.getElementById('landing').style.display = 'flex';
+}
+
+function loadDemo() {
+  startApp();
+  // Load demo templates
+  const demoSlides = [
+    { type: 'title', title: 'Mi Presentación', body: 'Subtítulo descriptivo', bg: 'cover' },
+    { type: 'content', title: 'Introducción', body: 'Contenido de la diapositiva...', bg: 'content' },
+    { type: 'comparison', title: 'Comparación', body: '2023 vs 2024', bg: 'content' },
+    { type: 'data', title: 'Resultados', body: 'Datos clave del análisis', bg: 'content' },
+    { type: 'close', title: 'Gracias', body: '¿Preguntas?', bg: 'close' }
+  ];
+  state.slides = demoSlides;
+  state.currentSlide = 0;
+  renderSlideList();
+  renderCurrentSlide();
+  goToStep(3);
+}
+
+// Navigation
+function goToStep(step) {
+  state.currentStep = step;
+  document.querySelectorAll('.step').forEach(s => s.classList.toggle('active', parseInt(s.dataset.step) === step));
+  document.querySelectorAll('.step-content').forEach(c => c.classList.toggle('active', c.id === `step-${step}`));
+  if (step === 3) renderCurrentSlide();
+}
+
+// Template Upload
+const uploadZone = document.getElementById('template-upload');
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleTemplateUpload(event) {
+  handleFiles(event.target.files);
+}
+
+function handleFiles(files) {
+  for (const file of files) {
+    if (!file.type.startsWith('image/')) continue;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const name = file.name.toLowerCase();
+      if (name.includes('portada') || name.includes('cover') || name.includes('inicio')) state.templates.cover = e.target.result;
+      else if (name.includes('cierre') || name.includes('close') || name.includes('fin')) state.templates.close = e.target.result;
+      else state.templates.content = e.target.result;
+      renderTemplatePreview();
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function renderTemplatePreview() {
+  const container = document.getElementById('template-list');
+  container.innerHTML = '';
+  for (const [type, src] of Object.entries(state.templates)) {
+    if (!src) continue;
+    const card = document.createElement('div');
+    card.style.cssText = 'background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; overflow: hidden;';
+    card.innerHTML = `<img src="${src}" style="width:100%; height: 80px; object-fit: cover;"><div style="padding: 8px; font-size: 0.875rem; font-weight: 600; text-transform: capitalize;">${type}</div>`;
+    container.appendChild(card);
+  }
+  document.getElementById('template-preview').style.display = container.children.length ? 'block' : 'none';
+}
+
+function clearTemplates() {
+  state.templates = { cover: null, content: null, close: null };
+  renderTemplatePreview();
+}
+
+// Slide Management
+function addSlide(type) {
+  const defaults = {
+    title: { title: 'Título', body: '', bg: 'cover' },
+    content: { title: 'Nueva slide', body: 'Contenido aquí...', bg: 'content' },
+    comparison: { title: 'Comparación', body: '2023 vs 2024', bg: 'content' },
+    data: { title: 'Datos', body: 'Resultados clave...', bg: 'content' },
+    close: { title: 'Gracias', body: '¿Preguntas?', bg: 'close' }
+  };
+  state.slides.push({ type, ...defaults[type] });
+  renderSlideList();
+}
+
+function renderSlideList() {
+  const container = document.getElementById('slide-list');
+  container.innerHTML = '';
+  state.slides.forEach((slide, i) => {
+    const item = document.createElement('div');
+    item.className = `slide-item ${i === state.currentSlide ? 'active' : ''}`;
+    item.onclick = () => { state.currentSlide = i; renderSlideList(); renderCurrentSlide(); };
+    item.innerHTML = `
+      <div class="slide-thumb"></div>
+      <div class="slide-info">
+        <div class="slide-title">${slide.title}</div>
+        <div class="slide-type">${slide.type} · ${slide.bg}</div>
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); removeSlide(${i})">×</button>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function removeSlide(index) {
+  state.slides.splice(index, 1);
+  if (state.currentSlide >= state.slides.length) state.currentSlide = Math.max(0, state.slides.length - 1);
+  renderSlideList();
+  renderCurrentSlide();
+}
+
+// Editor
+function renderCurrentSlide() {
+  if (!state.slides.length) return;
+  const slide = state.slides[state.currentSlide];
+  const bg = state.templates[slide.bg] || '';
+  document.getElementById('slide-bg').style.backgroundImage = bg ? `url(${bg})` : 'none';
+  document.getElementById('slide-bg').style.backgroundColor = slide.bg === 'cover' ? '#0a0a2e' : slide.bg === 'close' ? '#0a1a2e' : '#f8f9fa';
+  document.getElementById('slide-title').textContent = slide.title;
+  document.getElementById('slide-body').textContent = slide.body;
+  document.getElementById('slide-type').value = slide.type;
+  document.getElementById('slide-bg-select').value = slide.bg;
+
+  // Update editors
+  document.getElementById('slide-title').oninput = e => { state.slides[state.currentSlide].title = e.target.textContent; };
+  document.getElementById('slide-body').oninput = e => { state.slides[state.currentSlide].body = e.target.textContent; };
+}
+
+function updateSlideType() {
+  state.slides[state.currentSlide].type = document.getElementById('slide-type').value;
+  renderSlideList();
+}
+
+function updateSlideBg() {
+  state.slides[state.currentSlide].bg = document.getElementById('slide-bg-select').value;
+  renderCurrentSlide();
+}
+
+function updateRatio() {
+  state.ratio = document.getElementById('slide-ratio').value;
+  const canvas = document.getElementById('slide-canvas');
+  canvas.style.aspectRatio = state.ratio.replace(':', '/');
+}
+
+function prevSlide() {
+  if (state.currentSlide > 0) { state.currentSlide--; renderSlideList(); renderCurrentSlide(); }
+}
+
+function nextSlide() {
+  if (state.currentSlide < state.slides.length - 1) { state.currentSlide++; renderSlideList(); renderCurrentSlide(); }
+}
+
+// Export
+function exportCurrent() {
+  showProgress('Exportando slide...');
+  const slide = state.slides[state.currentSlide];
+  const bgSrc = state.templates[slide.bg];
+  
+  // Create canvas
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const [w, h] = state.ratio === '4:3' ? [1500, 1125] : [1920, 1080];
+  canvas.width = w;
+  canvas.height = h;
+  
+  // Draw background
+  if (bgSrc) {
+    const img = new Image();
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, w, h);
+      drawTextOnCanvas(ctx, slide, w, h);
+      finishExport(canvas, `slide-${state.currentSlide + 1}.png`);
+    };
+    img.src = bgSrc;
+  } else {
+    // Default background
+    ctx.fillStyle = slide.bg === 'cover' ? '#0a0a2e' : slide.bg === 'close' ? '#0a1a2e' : '#f8f9fa';
+    ctx.fillRect(0, 0, w, h);
+    drawTextOnCanvas(ctx, slide, w, h);
+    finishExport(canvas, `slide-${state.currentSlide + 1}.png`);
+  }
+}
+
+function drawTextOnCanvas(ctx, slide, w, h) {
+  ctx.fillStyle = slide.bg === 'content' ? '#1a1a2e' : '#ffffff';
+  ctx.font = `bold ${w * 0.04}px Inter, sans-serif`;
+  ctx.textAlign = 'left';
+  
+  // Title
+  const titleSize = w * 0.05;
+  ctx.font = `900 ${titleSize}px Inter, sans-serif`;
+  ctx.fillStyle = slide.bg === 'content' ? '#ffffff' : '#1a1a2e';
+  wrapText(ctx, slide.title, w * 0.08, h * 0.35, w * 0.84, titleSize * 1.2);
+  
+  // Body
+  ctx.font = `400 ${w * 0.025}px Inter, sans-serif`;
+  ctx.fillStyle = slide.bg === 'content' ? '#ccccdd' : '#666680';
+  wrapText(ctx, slide.body, w * 0.08, h * 0.55, w * 0.84, w * 0.025 * 1.5);
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(' ');
+  let line = '';
+  let currentY = y;
+  
+  for (const word of words) {
+    const testLine = line + word + ' ';
+    const metrics = ctx.measureText(testLine);
+    if (metrics.width > maxWidth && line !== '') {
+      ctx.fillText(line.trim(), x, currentY);
+      line = word + ' ';
+      currentY += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  ctx.fillText(line.trim(), x, currentY);
+}
+
+function finishExport(canvas, filename) {
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    hideProgress();
+  }, 'image/png');
+}
+
+async function exportAll() {
+  showProgress('Exportando todas las slides...');
+  const savedSlide = state.currentSlide;
+  
+  for (let i = 0; i < state.slides.length; i++) {
+    state.currentSlide = i;
+    renderCurrentSlide();
+    await new Promise(r => setTimeout(r, 300));
+    
+    const slide = state.slides[i];
+    const bgSrc = state.templates[slide.bg];
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const [w, h] = state.ratio === '4:3' ? [1500, 1125] : [1920, 1080];
+    canvas.width = w;
+    canvas.height = h;
+    
+    if (bgSrc) {
+      const img = new Image();
+      await new Promise(resolve => {
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, w, h);
+          drawTextOnCanvas(ctx, slide, w, h);
+          canvas.toBlob(blob => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `slide-${String(i + 1).padStart(2, '0')}.png`;
+            a.click();
+            URL.revokeObjectURL(url);
+            resolve();
+          }, 'image/png');
+        };
+        img.src = bgSrc;
+      });
+    } else {
+      ctx.fillStyle = slide.bg === 'cover' ? '#0a0a2e' : slide.bg === 'close' ? '#0a1a2e' : '#f8f9fa';
+      ctx.fillRect(0, 0, w, h);
+      drawTextOnCanvas(ctx, slide, w, h);
+      canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `slide-${String(i + 1).padStart(2, '0')}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    }
+  }
+  
+  state.currentSlide = savedSlide;
+  renderCurrentSlide();
+  hideProgress();
+}
+
+function exportPDF() {
+  showProgress('Generando PDF...');
+  // Simple PDF using jsPDF-like approach or just note that this needs jsPDF library
+  alert('Para exportar a PDF, se necesita la biblioteca jsPDF. Por ahora, exporta como PNG y combínalas en PowerPoint.');
+  hideProgress();
+}
+
+function showProgress(text) {
+  document.getElementById('progress-text').textContent = text;
+  document.getElementById('progress').classList.add('active');
+}
+
+function hideProgress() {
+  document.getElementById('progress').classList.remove('active');
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft' && state.currentStep === 3) prevSlide();
+  if (e.key === 'ArrowRight' && state.currentStep === 3) nextSlide();
+});
+</script>
+</body>
+</html>
