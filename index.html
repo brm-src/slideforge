@@ -3,915 +3,234 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SlideForge — Presentaciones profesionales, 100% locales</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<title>SlideForge — editor local de presentaciones</title>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg:       #f7f6f2;
-  --bg-card:  #eeece6;
-  --bg-green: #1a7a5a;
-  --bg-green-light: #22a075;
-  --text:     #1a1a1a;
-  --text-soft:#5a5a5a;
-  --text-inv: #ffffff;
-  --rule:     #e0ddd6;
-  --radius:   12px;
-  --radius-lg: 16px;
-  --radius-pill: 9999px;
-  --max-w:    1100px;
-  --font:     'Inter', system-ui, -apple-system, sans-serif;
-}
-
-html { font-size: 16px; scroll-behavior: smooth; }
-
-body {
-  font-family: var(--font);
-  color: var(--text);
-  background: var(--bg);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-a { color: inherit; text-decoration: none; }
-img { max-width: 100%; display: block; }
-
-/* ── Nav ── */
-
-.nav {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.nav__brand {
-  font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: -0.02em;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.nav__brand-icon {
-  width: 28px;
-  height: 28px;
-  background: var(--bg-green);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 0.85rem;
-}
-
-.nav__links {
-  display: flex;
-  gap: 1.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-soft);
-}
-
-.nav__links a:hover { color: var(--text); }
-
-/* ─ Hero ── */
-
-.hero {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 2rem 1.5rem 3rem;
-}
-
-.hero__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.hero__content { max-width: 480px; }
-
-.hero__title {
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  margin-bottom: 1rem;
-}
-
-.hero__title span { color: var(--bg-green); }
-
-.hero__lede {
-  font-size: 1.05rem;
-  color: var(--text-soft);
-  line-height: 1.55;
-  margin-bottom: 1.75rem;
-}
-
-.hero__form {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.hero__input {
-  flex: 1;
-  padding: 0.7rem 1rem;
-  border: 1.5px solid var(--rule);
-  border-radius: var(--radius-pill);
-  font-size: 0.875rem;
-  font-family: var(--font);
-  background: white;
-  outline: none;
-  transition: border-color 0.15s;
-}
-
-.hero__input:focus { border-color: var(--bg-green); }
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.7rem 1.5rem;
-  border-radius: var(--radius-pill);
-  font-family: var(--font);
-  font-size: 0.875rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-
-.btn--primary {
-  background: var(--bg-green);
-  color: var(--text-inv);
-}
-
-.btn--primary:hover { background: var(--bg-green-light); }
-
-.btn--dark {
-  background: var(--text);
-  color: var(--text-inv);
-}
-
-.btn--dark:hover { opacity: 0.85; }
-
-/* ── Logos strip ── */
-
-.logos {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 1.5rem 3rem;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.logos__label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-soft);
-}
-
-.logos__row {
-  display: flex;
-  align-items: center;
-  gap: 1.75rem;
-  flex-wrap: wrap;
-}
-
-.logos__item {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-soft);
-  opacity: 0.5;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-/* ── Hero image ── */
-
-.hero__image {
-  max-width: var(--max-w);
-  margin: 0 auto 3rem;
-  padding: 0 1.5rem;
-}
-
-.hero__image-inner {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.hero__mock {
-  width: 280px;
-  height: 560px;
-  background: #1a1a1a;
-  border-radius: 32px;
-  border: 4px solid #333;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-}
-
-.hero__mock-screen {
-  position: absolute;
-  inset: 8px;
-  border-radius: 26px;
-  background: linear-gradient(160deg, #1a7a5a 0%, #0d4030 100%);
-  display: flex;
-  flex-direction: column;
-  padding: 2.5rem 1.25rem 1.25rem;
-}
-
-.hero__mock-notch {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 24px;
-  background: #1a1a1a;
-  border-radius: 0 0 16px 16px;
-  z-index: 2;
-}
-
-.hero__mock-content {
-  color: white;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.hero__mock-title {
-  font-size: 0.7rem;
-  font-weight: 600;
-  opacity: 0.8;
-  margin-bottom: 0.25rem;
-}
-
-.hero__mock-heading {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-}
-
-.hero__mock-card {
-  background: rgba(255,255,255,0.12);
-  border-radius: 12px;
-  padding: 0.75rem;
-  backdrop-filter: blur(10px);
-}
-
-.hero__mock-card-label {
-  font-size: 0.55rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  opacity: 0.6;
-  margin-bottom: 0.35rem;
-}
-
-.hero__mock-card-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.hero__mock-dots {
-  display: flex;
-  gap: 6px;
-  margin-top: auto;
-}
-
-.hero__mock-dot {
-  width: 24px;
-  height: 3px;
-  border-radius: 2px;
-  background: rgba(255,255,255,0.2);
-}
-
-.hero__mock-dot--active {
-  background: rgba(255,255,255,0.7);
-  width: 40px;
-}
-
-/* ─ Sections ── */
-
-.section {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 4rem 1.5rem;
-  border-top: 1px solid var(--rule);
-}
-
-.section__header {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1rem 2rem;
-  margin-bottom: 3rem;
-  align-items: baseline;
-}
-
-.section__num {
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--bg-green);
-  background: rgba(26,122,90,0.08);
-  padding: 0.3rem 0.7rem;
-  border-radius: var(--radius-pill);
-  width: fit-content;
-}
-
-.section__title {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  max-width: 28ch;
-}
-
-.section__desc {
-  grid-column: 1 / -1;
-  font-size: 0.95rem;
-  color: var(--text-soft);
-  max-width: 55ch;
-  line-height: 1.6;
-}
-
-/* ── Feature grid ── */
-
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-}
-
-.feature-card {
-  background: var(--bg-card);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  transition: transform 0.15s;
-}
-
-.feature-card:hover { transform: translateY(-2px); }
-
-.feature-card__icon {
-  width: 40px;
-  height: 40px;
-  background: var(--bg-green);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-}
-
-.feature-card__title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-}
-
-.feature-card__body {
-  font-size: 0.825rem;
-  color: var(--text-soft);
-  line-height: 1.55;
-}
-
-/* ── Feature row (alternating) ── */
-
-.feature-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-.feature-row--reverse { direction: rtl; }
-.feature-row--reverse > * { direction: ltr; }
-
-.feature-row__text h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
-}
-
-.feature-row__text p {
-  font-size: 0.9rem;
-  color: var(--text-soft);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-
-.feature-row__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.tag {
-  font-size: 0.7rem;
-  font-weight: 500;
-  padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-pill);
-  background: var(--bg-card);
-  color: var(--text-soft);
-  border: 1px solid var(--rule);
-}
-
-.tag--green {
-  background: rgba(26,122,90,0.08);
-  color: var(--bg-green);
-  border-color: transparent;
-}
-
-.feature-row__visual {
-  background: var(--bg-card);
-  border-radius: var(--radius-lg);
-  aspect-ratio: 4/3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.feature-row__visual--green {
-  background: var(--bg-green);
-  position: relative;
-}
-
-.visual-slide {
-  width: 80%;
-  height: 75%;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  padding: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.visual-slide__bar {
-  height: 6px;
-  border-radius: 3px;
-  background: #e8e6e0;
-}
-
-.visual-slide__bar--short { width: 40%; }
-.visual-slide__bar--med { width: 70%; }
-.visual-slide__bar--green { background: var(--bg-green); }
-.visual-slide__bar--long { width: 100%; }
-
-.visual-slide__title {
-  height: 12px;
-  width: 55%;
-  background: var(--text);
-  border-radius: 4px;
-  margin-top: 0.5rem;
-}
-
-.visual-slide__blocks {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.4rem;
-  margin-top: auto;
-}
-
-.visual-slide__block {
-  height: 36px;
-  background: #f0eee8;
-  border-radius: 6px;
-}
-
-.visual-slide__block--accent {
-  background: var(--bg-green);
-  opacity: 0.3;
-}
-
-/* ── Testimonial ── */
-
-.testimonial {
-  text-align: center;
-  padding: 3rem 1.5rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.testimonial__pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: var(--bg-card);
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-pill);
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-soft);
-  margin-bottom: 1.25rem;
-}
-
-.testimonial__pill-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--bg-green);
-  border-radius: 50%;
-}
-
-.testimonial__quote {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  color: var(--text);
-}
-
-.testimonial__author {
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.testimonial__role {
-  font-size: 0.75rem;
-  color: var(--text-soft);
-}
-
-/* ── CTA band ── */
-
-.cta-band {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 1.5rem 4rem;
-}
-
-.cta-band__inner {
-  background: var(--bg-green);
-  border-radius: var(--radius-lg);
-  padding: 3rem 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.cta-band__text {
-  color: var(--text-inv);
-}
-
-.cta-band__title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 0.35rem;
-}
-
-.cta-band__desc {
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-.btn--white {
-  background: white;
-  color: var(--bg-green);
-  font-weight: 700;
-}
-
-.btn--white:hover { opacity: 0.9; }
-
-/* ── Footer ── */
-
-.footer {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-  border-top: 1px solid var(--rule);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.footer__copy {
-  font-size: 0.8rem;
-  color: var(--text-soft);
-}
-
-.footer__links {
-  display: flex;
-  gap: 1.25rem;
-}
-
-.footer__links a {
-  font-size: 0.8rem;
-  color: var(--text-soft);
-  transition: color 0.15s;
-}
-
-.footer__links a:hover { color: var(--text); }
-
-/* ── Mobile ── */
-
-@media (max-width: 768px) {
-  .feature-row { grid-template-columns: 1fr; gap: 2rem; }
-  .feature-row--reverse { direction: ltr; }
-  .section__header { grid-template-columns: 1fr; gap: 0.5rem; }
-  .cta-band__inner { flex-direction: column; text-align: center; padding: 2.5rem 1.5rem; }
-  .hero__form { flex-direction: column; }
-  .logos { flex-direction: column; align-items: flex-start; gap: 1rem; }
-}
-
-/* ── Animations ── */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero__content { animation: fadeUp 0.6s ease both; }
-.hero__image { animation: fadeUp 0.6s ease 0.15s both; }
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.hero__mock-dot--active { animation: pulse 2s ease infinite; }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f6f1;--panel:#eeece3;--panel-2:#fffdf8;--ink:#171817;--muted:#60645f;
+  --green:#167557;--green-2:#22a075;--line:#dedbd1;--cream:#fbfaf5;--red:#b85042;
+  --shadow:0 18px 55px rgba(28,30,27,.12);--radius:18px;--pill:999px;--max:1160px;
+  --font:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+html{scroll-behavior:smooth} body{font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}button{cursor:pointer}
+.nav{max-width:var(--max);margin:0 auto;padding:1.1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{display:flex;align-items:center;gap:.55rem;font-weight:800;letter-spacing:-.03em}.brand-mark{width:30px;height:30px;border-radius:9px;background:var(--green);color:white;display:grid;place-items:center;box-shadow:0 8px 18px rgba(22,117,87,.22)}
+.nav-links{display:flex;align-items:center;gap:1.15rem;color:var(--muted);font-size:.9rem;font-weight:650}.nav-links a:hover{color:var(--ink)}
+.btn{border:0;border-radius:var(--pill);padding:.78rem 1.08rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;transition:.15s ease;white-space:nowrap}.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--green);color:#fff}.btn-primary:hover{background:var(--green-2)}.btn-dark{background:var(--ink);color:#fff}.btn-ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-soft{background:rgba(22,117,87,.09);color:var(--green)}.btn-danger{background:rgba(184,80,66,.11);color:var(--red)}
+.hero{max-width:var(--max);margin:0 auto;padding:2rem 1.25rem 3rem;display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,520px);gap:3rem;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:.45rem;background:rgba(22,117,87,.09);color:var(--green);border-radius:var(--pill);padding:.38rem .75rem;font-size:.78rem;font-weight:850;text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.1rem}.hero h1{font-size:clamp(2.2rem,6vw,4.35rem);line-height:.98;letter-spacing:-.07em;max-width:760px}.hero h1 span{color:var(--green)}.lede{font-size:1.08rem;color:var(--muted);max-width:620px;margin:1.1rem 0 1.45rem}.hero-actions{display:flex;gap:.65rem;flex-wrap:wrap}.trust{margin-top:1.35rem;display:flex;gap:.55rem;flex-wrap:wrap}.chip{border:1px solid var(--line);background:rgba(255,255,255,.58);border-radius:var(--pill);padding:.38rem .66rem;color:var(--muted);font-size:.82rem;font-weight:700}
+.mock-shell{background:var(--panel);border-radius:26px;padding:1rem;box-shadow:var(--shadow);position:relative;overflow:hidden}.mock-shell:before{content:"";position:absolute;inset:auto -20% -45% 35%;height:70%;background:radial-gradient(circle,rgba(34,160,117,.26),transparent 62%);pointer-events:none}.mock-window{position:relative;background:#111;border-radius:20px;padding:.75rem;box-shadow:0 20px 40px rgba(0,0,0,.18)}.mock-top{display:flex;gap:.35rem;margin-bottom:.55rem}.dot{width:.55rem;height:.55rem;border-radius:50%;background:#fff3;}.mock-slide{aspect-ratio:16/9;border-radius:14px;background:linear-gradient(135deg,#fdfbf4 0%,#f0ece0 62%,#167557 62%);padding:1.2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:260px}.mock-slide h3{font-size:1.55rem;line-height:1.05;letter-spacing:-.04em;max-width:65%}.mock-card{align-self:flex-end;background:rgba(255,255,255,.9);border-radius:16px;padding:.85rem;width:46%;box-shadow:0 14px 28px rgba(0,0,0,.12)}.mock-card b{font-size:2.1rem;color:var(--green);line-height:1}.mock-card p{font-size:.78rem;color:var(--muted)}
+.section{max-width:var(--max);margin:0 auto;padding:3.6rem 1.25rem;border-top:1px solid var(--line)}.section-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1rem 2rem;align-items:start;margin-bottom:1.7rem}.section-num{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);background:rgba(22,117,87,.09);padding:.35rem .7rem;border-radius:var(--pill);font-weight:900}.section-title{font-size:clamp(1.45rem,3.2vw,2.25rem);line-height:1.08;letter-spacing:-.045em;max-width:800px}.section-desc{grid-column:2;color:var(--muted);max-width:700px}.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.feature-card{background:var(--panel);border-radius:var(--radius);padding:1.2rem;min-height:150px}.feature-card .icon{width:42px;height:42px;border-radius:13px;background:var(--green);color:#fff;display:grid;place-items:center;margin-bottom:.9rem}.feature-card h3{font-size:1rem;margin-bottom:.35rem}.feature-card p{font-size:.9rem;color:var(--muted)}
+.app-wrap{max-width:var(--max);margin:0 auto 3rem;padding:0 1.25rem}.app{background:var(--ink);border-radius:28px;padding:1rem;box-shadow:var(--shadow)}.app-inner{background:var(--cream);border-radius:22px;overflow:hidden}.app-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem;border-bottom:1px solid var(--line);background:#fff}.app-top h2{letter-spacing:-.04em}.app-status{font-size:.84rem;color:var(--muted);font-weight:700}.toolbar{display:flex;gap:.55rem;flex-wrap:wrap}.workspace{display:grid;grid-template-columns:300px minmax(0,1fr) 300px;min-height:760px}.sidebar,.inspector{padding:1rem;background:#f3f1e8}.sidebar{border-right:1px solid var(--line)}.inspector{border-left:1px solid var(--line)}.stage-area{padding:1.2rem;display:flex;flex-direction:column;gap:1rem;min-width:0}.panel-title{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:900;margin:.25rem 0 .7rem}.template-grid{display:grid;gap:.55rem}.upload-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:.75rem}.upload-card label{display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-weight:850;font-size:.9rem}.upload-card input{display:none}.upload-name{display:block;color:var(--muted);font-size:.78rem;margin-top:.25rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.slide-list{display:grid;gap:.45rem;margin-top:.65rem}.slide-item{width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:14px;padding:.65rem;display:grid;grid-template-columns:auto 1fr;gap:.55rem;align-items:start}.slide-item.active{border-color:var(--green);box-shadow:0 0 0 3px rgba(22,117,87,.1)}.slide-no{width:1.7rem;height:1.7rem;border-radius:9px;background:var(--panel);display:grid;place-items:center;font-size:.78rem;font-weight:900;color:var(--green)}.slide-name{font-size:.86rem;font-weight:850;line-height:1.2}.slide-meta{font-size:.74rem;color:var(--muted);margin-top:.14rem}.canvas-shell{background:#d7d3c8;border-radius:20px;padding:1rem;display:grid;place-items:center;min-height:430px;overflow:auto}.slide-stage{width:min(100%,900px);aspect-ratio:16/9;border-radius:10px;background:#fff;box-shadow:0 20px 45px rgba(0,0,0,.18);position:relative;overflow:hidden;background-size:cover;background-position:center}.slide-stage.ratio-43{aspect-ratio:4/3}.slide-bg-fallback{position:absolute;inset:0;background:linear-gradient(135deg,#fffdf6 0%,#ece7da 58%,#167557 58%,#167557 100%)}.slide-bg-fallback.content{background:linear-gradient(90deg,#167557 0%,#167557 12%,#fffdf6 12%,#fffdf6 100%)}.slide-bg-fallback.close{background:linear-gradient(135deg,#167557 0%,#0d3f30 100%)}.slide-content{position:absolute;inset:0;padding:7.2% 8%;display:flex;flex-direction:column}.slide-content.cover,.slide-content.close{justify-content:center;max-width:68%}.slide-content.close{color:#fff}.slide-kicker{font-size:1.2vw;text-transform:uppercase;letter-spacing:.12em;color:var(--green);font-weight:900;margin-bottom:.7vw}.slide-content.close .slide-kicker{color:#ffffffcc}.slide-title{font-size:4vw;line-height:1.02;letter-spacing:-.055em;font-weight:900;outline:none}.slide-body{font-size:1.55vw;line-height:1.28;margin-top:1.1vw;max-width:80%;outline:none;white-space:pre-wrap}.slide-stat{font-size:5.2vw;line-height:.9;color:var(--green);font-weight:950;letter-spacing:-.06em;outline:none;margin-top:1.2vw}.slide-note{font-size:1vw;color:#656961;margin-top:auto;outline:none;white-space:pre-wrap}.slide-content.close .slide-note{color:#ffffffb8}.layout-stat{justify-content:center}.layout-stat .slide-title{font-size:2.2vw;max-width:58%}.layout-stat .slide-body{max-width:56%}.layout-stat .slide-stat{position:absolute;right:8%;top:27%;font-size:8vw}.layout-compare{display:grid;grid-template-rows:auto 1fr auto;gap:1.2vw}.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2vw;margin-top:1.2vw}.compare-card{background:rgba(255,255,255,.82);border:1px solid rgba(0,0,0,.06);border-radius:1.1vw;padding:1.2vw}.compare-card b{display:block;font-size:1.25vw;margin-bottom:.45vw}.compare-card div{font-size:1.15vw;line-height:1.28;white-space:pre-wrap;outline:none}.stage-tools{display:flex;align-items:center;justify-content:space-between;gap:1rem}.field{display:grid;gap:.35rem;margin-bottom:.72rem}.field label{font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:var(--muted)}.field input,.field textarea,.field select{border:1px solid var(--line);background:#fff;border-radius:12px;padding:.72rem;color:var(--ink);width:100%}.field textarea{min-height:92px;resize:vertical}.small-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin:.75rem 0}.csv-box{margin-top:1rem}.csv-box textarea{min-height:155px;font-size:.82rem}.help{font-size:.78rem;color:var(--muted);margin-top:.35rem}.privacy-band{max-width:var(--max);margin:0 auto 3.4rem;padding:0 1.25rem}.privacy-inner{background:var(--green);color:#fff;border-radius:24px;padding:2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}.privacy-inner p{color:#ffffffc9;max-width:680px}.footer{max-width:var(--max);margin:0 auto;padding:2rem 1.25rem;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.9rem}.footer-links{display:flex;gap:1rem;font-weight:750}
+@media(max-width:1040px){.hero{grid-template-columns:1fr}.workspace{grid-template-columns:1fr}.sidebar,.inspector{border:0;border-bottom:1px solid var(--line)}.inspector{border-top:1px solid var(--line)}.feature-grid{grid-template-columns:1fr 1fr}.slide-title{font-size:7vw}.slide-body{font-size:2.7vw}.slide-stat{font-size:8vw}.layout-stat .slide-title{font-size:4vw}.layout-stat .slide-stat{font-size:11vw}.slide-kicker{font-size:2vw}.slide-note{font-size:1.8vw}.compare-card b{font-size:2vw}.compare-card div{font-size:1.8vw}}
+@media(max-width:680px){.nav-links{display:none}.feature-grid{grid-template-columns:1fr}.hero{padding-top:1rem}.hero-actions,.toolbar,.stage-tools{align-items:stretch;flex-direction:column}.section-head{grid-template-columns:1fr}.section-desc{grid-column:1}.workspace{min-height:auto}.app{padding:.45rem;border-radius:20px}.app-inner{border-radius:16px}.slide-content{padding:8%}.slide-stage{width:760px}.canvas-shell{justify-content:start}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}.hero-copy,.mock-shell,.feature-card,.app{animation:fadeUp .55s ease both}.mock-shell{animation-delay:.08s}
 </style>
 </head>
 <body>
-
-<!-- Nav -->
 <nav class="nav">
-  <div class="nav__brand">
-    <div class="nav__brand-icon">⬡</div>
-    SlideForge
-  </div>
-  <div class="nav__links">
-    <a href="#como">Cómo funciona</a>
-    <a href="https://ko-fi.com/brmcl" target="_blank"> Apoyar</a>
-    <a href="https://github.com/brm-src/slideforge" target="_blank">GitHub</a>
-  </div>
+  <a class="brand" href="#top"><span class="brand-mark">⬡</span><span>SlideForge</span></a>
+  <div class="nav-links"><a href="#editor">Editor</a><a href="#funciones">Funciones</a><a href="https://ko-fi.com/brmcl" target="_blank" rel="noreferrer">Apoyar</a><a href="https://github.com/brm-src/slideforge" target="_blank" rel="noreferrer">GitHub</a></div>
 </nav>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="hero__top">
-    <div class="hero__content">
-      <h1 class="hero__title">Presentaciones profesionales, <span>100% locales.</span></h1>
-      <p class="hero__lede">Crea, edita y exporta diapositivas pixel-perfect sin subir nada a ningún servidor. Tu plantilla, tu contenido, tu máquina.</p>
-      <div class="hero__form">
-        <input class="hero__input" type="text" placeholder="Tu email" />
-        <button class="btn btn--dark">Empezar gratis</button>
-      </div>
-    </div>
+<header class="hero" id="top">
+  <div class="hero-copy">
+    <div class="eyebrow">100% local · sin backend · sin nube</div>
+    <h1>Presentaciones profesionales con <span>tu identidad visual.</span></h1>
+    <p class="lede">Sube fondos institucionales, escribe sobre la diapositiva, importa CSV y exporta PNG listo para pegar en PowerPoint. Nada sale de tu navegador.</p>
+    <div class="hero-actions"><a class="btn btn-primary" href="#editor">Abrir editor →</a><button class="btn btn-ghost" id="heroDemoBtn">Cargar demo</button></div>
+    <div class="trust"><span class="chip">Tesis</span><span class="chip">Corporativo</span><span class="chip">Plantillas cerradas</span><span class="chip">Datos sensibles</span></div>
   </div>
-</section>
-
-<!-- Logos -->
-<div class="logos">
-  <span class="logos__label">Usado por</span>
-  <div class="logos__row">
-    <span class="logos__item">◆ Tesis</span>
-    <span class="logos__item">◆ Corporativo</span>
-    <span class="logos__item">◆ Academia</span>
-    <span class="logos__item">◆ Freelance</span>
-    <span class="logos__item">◆ Startups</span>
-  </div>
-</div>
-
-<!-- Hero image -->
-<div class="hero__image">
-  <div class="hero__image-inner">
-    <div class="hero__mock">
-      <div class="hero__mock-notch"></div>
-      <div class="hero__mock-screen">
-        <div class="hero__mock-content">
-          <div>
-            <div class="hero__mock-title">SLIDE 04 / 12</div>
-            <div class="hero__mock-heading">Resultados del análisis</div>
-            <div class="hero__mock-card">
-              <div class="hero__mock-card-label">Distribución regional</div>
-              <div class="hero__mock-card-title">Zona norte: 67% cobertura</div>
-            </div>
-          </div>
-          <div class="hero__mock-dots">
-            <div class="hero__mock-dot"></div>
-            <div class="hero__mock-dot hero__mock-dot--active"></div>
-            <div class="hero__mock-dot"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Section: Problem / Solution -->
-<section class="section" id="como">
-  <div class="section__header">
-    <span class="section__num">00 — Problema</span>
-    <h2 class="section__title">Hacer presentaciones con identidad institucional es un dolor.</h2>
-    <p class="section__desc">Las herramientas online suben tus datos a sus servidores. PowerPoint no respeta tus plantillas. Y exportar a PNG siempre sale distinto a lo que ves en pantalla.</p>
-  </div>
-
-  <div class="section__header" style="margin-top: 3rem;">
-    <span class="section__num">01 — Solución</span>
-    <h2 class="section__title">Un editor que vive en tu navegador y no sale de ahí.</h2>
-    <p class="section__desc">SlideForge procesa todo local. Tu plantilla, tu contenido, tu exportación. Cero red, cero servidor, cero riesgo.</p>
-  </div>
-</section>
-
-<!-- Section: Features -->
-<section class="section">
-  <div class="section__header">
-    <span class="section__num">02 — Funciones</span>
-    <h2 class="section__title">Todo lo que necesitas para armar tu deck.</h2>
-  </div>
-
+  <div class="mock-shell" aria-hidden="true"><div class="mock-window"><div class="mock-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="mock-slide"><h3>Resultados de investigación</h3><div class="mock-card"><b>67%</b><p>Cobertura territorial con plantilla institucional intacta.</p></div></div></div></div>
+</header>
+<section class="section" id="funciones">
+  <div class="section-head"><span class="section-num">01 — Funciones</span><h2 class="section-title">Ya no es solo landing: ahora genera slides de verdad.</h2><p class="section-desc">El producto vive en un único HTML. Puedes usarlo online o descargarlo y abrirlo localmente.</p></div>
   <div class="feature-grid">
-    <div class="feature-card">
-      <div class="feature-card__icon">📁</div>
-      <div class="feature-card__title">Sube tu plantilla</div>
-      <div class="feature-card__body">Arrastra las imágenes de fondo — portada, contenido, cierre. Se procesan local.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-card__icon">️</div>
-      <div class="feature-card__title">Edita en vivo</div>
-      <div class="feature-card__body">Texto editable directamente sobre la diapositiva. Lo que ves es lo que exportas.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-card__icon">📐</div>
-      <div class="feature-card__title">Exporta a PNG</div>
-      <div class="feature-card__body">Un clic por slide, resolución exacta 4:3 o 16:9. Pégala directo en PowerPoint.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-card__icon">📊</div>
-      <div class="feature-card__title">Importa CSV</div>
-      <div class="feature-card__body">Define todas tus slides de una vez con un archivo de texto. Título, cuerpo, tipo.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-card__icon">🔒</div>
-      <div class="feature-card__title">Privacidad total</div>
-      <div class="feature-card__body">Nada sale de tu máquina. Ideal para tesis, datos sensibles, contenido corporativo.</div>
-    </div>
-    <div class="feature-card">
-      <div class="feature-card__icon"></div>
-      <div class="feature-card__title">Cualquier plantilla</div>
-      <div class="feature-card__body">Universidades, empresas, gobiernos — usá la identidad visual que necesites.</div>
-    </div>
+    <article class="feature-card"><div class="icon">📁</div><h3>Fondos propios</h3><p>Carga portada, contenido y cierre. Se guardan solo en RAM.</p></article>
+    <article class="feature-card"><div class="icon">✍️</div><h3>Edición sobre la slide</h3><p>Contenteditable en la vista previa: título, cuerpo, dato y nota.</p></article>
+    <article class="feature-card"><div class="icon">📊</div><h3>CSV rápido</h3><p>Importa filas con tipo, título, cuerpo, dato y nota.</p></article>
+    <article class="feature-card"><div class="icon">📐</div><h3>4:3 o 16:9</h3><p>Exporta 1500×1125 o 1920×1080 según el formato elegido.</p></article>
+    <article class="feature-card"><div class="icon">🧩</div><h3>Layouts útiles</h3><p>Portada, contenido, comparación, dato fuerte y cierre.</p></article>
+    <article class="feature-card"><div class="icon">🔒</div><h3>Privacidad real</h3><p>Sin analytics, sin localStorage, sin servidor, sin APIs.</p></article>
   </div>
 </section>
-
-<!-- Section: How it works (feature rows) -->
-<section class="section">
-  <div class="section__header">
-    <span class="section__num">03 — Cómo funciona</span>
-    <h2 class="section__title">De plantilla a presentación en minutos.</h2>
-  </div>
-
-  <div class="feature-row">
-    <div class="feature-row__text">
-      <h3>1. Subí tus fondos</h3>
-      <p>Arrastrá las imágenes de tu plantilla institucional — portada, slides de contenido, slide de cierre. SlideForge las convierte y cachea local.</p>
-      <div class="feature-row__tags">
-        <span class="tag tag--green">JPG / PNG</span>
-        <span class="tag">Sin límite de tamaño</span>
-        <span class="tag">CMYK → RGB automático</span>
-      </div>
-    </div>
-    <div class="feature-row__visual feature-row__visual--green">
-      <div class="visual-slide">
-        <div class="visual-slide__bar visual-slide__bar--short"></div>
-        <div class="visual-slide__bar visual-slide__bar--med"></div>
-        <div class="visual-slide__bar visual-slide__bar--green"></div>
-        <div class="visual-slide__title"></div>
-        <div class="visual-slide__blocks">
-          <div class="visual-slide__block"></div>
-          <div class="visual-slide__block visual-slide__block--accent"></div>
-          <div class="visual-slide__block"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div style="height: 3rem;"></div>
-
-  <div class="feature-row feature-row--reverse">
-    <div class="feature-row__text">
-      <h3>2. Definí tu contenido</h3>
-      <p>Cargá título y cuerpo por diapositiva, o importá un CSV con todo tu deck. SlideForge arma la estructura automáticamente.</p>
-      <div class="feature-row__tags">
-        <span class="tag tag--green">CSV</span>
-        <span class="tag">Manual slide por slide</span>
-        <span class="tag">4:3 o 16:9</span>
-      </div>
-    </div>
-    <div class="feature-row__visual">
-      <div class="visual-slide">
-        <div class="visual-slide__title" style="width: 40%;"></div>
-        <div class="visual-slide__bar visual-slide__bar--long"></div>
-        <div class="visual-slide__bar visual-slide__bar--med"></div>
-        <div class="visual-slide__bar visual-slide__bar--short"></div>
-        <div class="visual-slide__blocks">
-          <div class="visual-slide__block visual-slide__block--accent"></div>
-          <div class="visual-slide__block"></div>
-          <div class="visual-slide__block visual-slide__block--accent"></div>
-        </div>
+<main class="app-wrap" id="editor">
+  <div class="app">
+    <div class="app-inner">
+      <div class="app-top"><div><h2>Editor local</h2><div class="app-status" id="status">Listo. Carga fondos o usa la demo.</div></div><div class="toolbar"><button class="btn btn-soft" id="loadDemoBtn">Demo</button><button class="btn btn-ghost" id="addSlideBtn">+ Slide</button><button class="btn btn-primary" id="exportCurrentBtn">Exportar actual</button><button class="btn btn-dark" id="exportAllBtn">Exportar todo</button></div></div>
+      <div class="workspace">
+        <aside class="sidebar">
+          <div class="panel-title">Fondos de plantilla</div>
+          <div class="template-grid">
+            <div class="upload-card"><label>Portada <span class="btn btn-soft">Subir</span><input type="file" accept="image/*" data-template="cover"></label><span class="upload-name" id="name-cover">Sin archivo</span></div>
+            <div class="upload-card"><label>Contenido <span class="btn btn-soft">Subir</span><input type="file" accept="image/*" data-template="content"></label><span class="upload-name" id="name-content">Sin archivo</span></div>
+            <div class="upload-card"><label>Cierre <span class="btn btn-soft">Subir</span><input type="file" accept="image/*" data-template="close"></label><span class="upload-name" id="name-close">Sin archivo</span></div>
+          </div>
+          <div class="small-actions"><button class="btn btn-ghost" id="clearTemplatesBtn">Quitar fondos</button></div>
+          <div class="panel-title" style="margin-top:1.2rem">Slides</div>
+          <div class="slide-list" id="slideList"></div>
+        </aside>
+        <section class="stage-area">
+          <div class="stage-tools"><div><div class="panel-title">Vista previa editable</div><div class="help">Haz clic en el texto de la slide para editar directo.</div></div><div class="small-actions"><button class="btn btn-ghost" id="prevBtn">←</button><button class="btn btn-ghost" id="nextBtn">→</button></div></div>
+          <div class="canvas-shell"><div class="slide-stage" id="stage"><div class="slide-bg-fallback"></div><div class="slide-content"></div></div></div>
+        </section>
+        <aside class="inspector">
+          <div class="panel-title">Propiedades</div>
+          <div class="field"><label>Formato</label><select id="aspectInput"><option value="16:9">16:9 — 1920×1080</option><option value="4:3">4:3 — 1500×1125</option></select></div>
+          <div class="field"><label>Layout</label><select id="typeInput"><option value="cover">Portada</option><option value="content">Contenido</option><option value="compare">Comparación</option><option value="stat">Dato fuerte</option><option value="close">Cierre</option></select></div>
+          <div class="field"><label>Título</label><input id="titleInput" /></div>
+          <div class="field"><label>Cuerpo</label><textarea id="bodyInput"></textarea></div>
+          <div class="field"><label>Dato / cifra</label><input id="statInput" /></div>
+          <div class="field"><label>Nota / fuente</label><textarea id="noteInput"></textarea></div>
+          <div class="small-actions"><button class="btn btn-danger" id="deleteSlideBtn">Eliminar slide</button></div>
+          <div class="csv-box"><div class="panel-title">Importar CSV</div><textarea id="csvInput" placeholder="tipo,titulo,cuerpo,dato,nota&#10;cover,Presentación institucional,Resumen ejecutivo,,Equipo 2026&#10;stat,Cobertura territorial,La muestra cubre 12 zonas,67%,Fuente: demo"></textarea><div class="small-actions"><button class="btn btn-soft" id="importCsvBtn">Importar CSV</button></div><p class="help">Tipos válidos: cover, content, compare, stat, close. Si no hay encabezado, usa ese orden.</p></div>
+        </aside>
       </div>
     </div>
   </div>
-
-  <div style="height: 3rem;"></div>
-
-  <div class="feature-row">
-    <div class="feature-row__text">
-      <h3>3. Editá y exportá</h3>
-      <p>Editá el texto directamente sobre cada diapositiva. Cuando estés listo, exportá a PNG con un clic — resolución exacta, pixel-perfect.</p>
-      <div class="feature-row__tags">
-        <span class="tag tag--green">Contenteditable</span>
-        <span class="tag">PNG 1500×1125</span>
-        <span class="tag">WYSIWYG</span>
-      </div>
-    </div>
-    <div class="feature-row__visual feature-row__visual--green">
-      <div class="visual-slide">
-        <div class="visual-slide__bar visual-slide__bar--green visual-slide__bar--short"></div>
-        <div class="visual-slide__title" style="width: 60%;"></div>
-        <div class="visual-slide__bar visual-slide__bar--med"></div>
-        <div class="visual-slide__bar visual-slide__bar--short"></div>
-        <div class="visual-slide__blocks">
-          <div class="visual-slide__block"></div>
-          <div class="visual-slide__block"></div>
-          <div class="visual-slide__block visual-slide__block--accent"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonial -->
-<div class="testimonial">
-  <div class="testimonial__pill">
-    <span class="testimonial__pill-dot"></span>
-    Usado en tesis
-  </div>
-  <p class="testimonial__quote">"SlideForge me salvó la defensa de tesis. Pude usar la plantilla exacta de mi universidad sin subir mis datos a ningún servidor."</p>
-  <p class="testimonial__author">Cristian</p>
-  <p class="testimonial__role">Investigador independiente</p>
-</div>
-
-<!-- CTA band -->
-<div class="cta-band">
-  <div class="cta-band__inner">
-    <div class="cta-band__text">
-      <div class="cta-band__title">Empezá a crear sin riesgos.</div>
-      <div class="cta-band__desc">Abrí el editor en tu navegador. No requiere instalación.</div>
-    </div>
-    <button class="btn btn--white" onclick="startApp(); return false;">Abrir editor →</button>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer__copy">SlideForge · Hecho con cuidado</div>
-  <div class="footer__links">
-    <a href="https://ko-fi.com/brmcl" target="_blank">☕ Apoyar</a>
-    <a href="https://github.com/brm-src/slideforge" target="_blank">GitHub</a>
-    <a href="#">Privacidad</a>
-  </div>
-</footer>
-
+</main>
+<section class="privacy-band"><div class="privacy-inner"><div><h2>La restricción es el producto.</h2><p>No hay autosave, tracking ni base de datos. Las plantillas se leen como Data URI en memoria; al cerrar la pestaña, se van.</p></div><a class="btn btn-dark" href="https://ko-fi.com/brmcl" target="_blank" rel="noreferrer">Apoyar como siempre</a></div></section>
+<footer class="footer"><span>SlideForge · Cris + Bela</span><div class="footer-links"><a href="#editor">Editor</a><a href="https://github.com/brm-src/slideforge" target="_blank" rel="noreferrer">GitHub</a><a href="https://ko-fi.com/brmcl" target="_blank" rel="noreferrer">Apoyar</a></div></footer>
 <script>
-function startApp() {
-  alert('Editor — próximamente. Por ahora abrí index.html local.');
-}
+(() => {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const state = {
+    aspect: '16:9',
+    active: 0,
+    templates: { cover: null, content: null, close: null },
+    slides: [
+      { type:'cover', title:'Presentación institucional', body:'Resumen ejecutivo y evidencia visual', stat:'', note:'Equipo · 2026' },
+      { type:'content', title:'Problema', body:'Las plantillas institucionales suelen romperse cuando se editan fuera de PowerPoint. SlideForge mantiene el fondo intacto y edita solo el contenido.', stat:'', note:'Todo corre localmente en el navegador.' },
+      { type:'stat', title:'Privacidad operacional', body:'Sin servidor, sin analíticas, sin almacenamiento persistente.', stat:'0', note:'Datos enviados a la nube' },
+      { type:'close', title:'Gracias', body:'Preguntas y discusión', stat:'', note:'Apoyar como siempre · ko-fi.com/brmcl' }
+    ]
+  };
+  const els = {
+    status: $('#status'), stage: $('#stage'), slideList: $('#slideList'), aspect: $('#aspectInput'), type: $('#typeInput'), title: $('#titleInput'), body: $('#bodyInput'), stat: $('#statInput'), note: $('#noteInput'), csv: $('#csvInput')
+  };
+  function setStatus(msg){ els.status.textContent = msg; }
+  function esc(s){ return String(s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+  function current(){ return state.slides[state.active]; }
+  function templateKey(type){ return type === 'cover' ? 'cover' : type === 'close' ? 'close' : 'content'; }
+  function fallbackClass(type){ return type === 'cover' ? '' : type === 'close' ? 'close' : 'content'; }
+  function slideLabel(slide){ return ({cover:'Portada',content:'Contenido',compare:'Comparación',stat:'Dato',close:'Cierre'}[slide.type] || slide.type); }
+  function renderAll(){ renderSlideList(); renderInspector(); renderStage(); }
+  function renderSlideList(){
+    els.slideList.innerHTML = '';
+    state.slides.forEach((slide, i) => {
+      const b = document.createElement('button'); b.className = 'slide-item' + (i === state.active ? ' active' : '');
+      b.innerHTML = `<span class="slide-no">${i+1}</span><span><span class="slide-name">${esc(slide.title || 'Sin título')}</span><span class="slide-meta">${slideLabel(slide)}</span></span>`;
+      b.addEventListener('click', () => { state.active = i; renderAll(); }); els.slideList.appendChild(b);
+    });
+  }
+  function renderInspector(){
+    const s = current(); if(!s) return;
+    els.aspect.value = state.aspect; els.type.value = s.type; els.title.value = s.title || ''; els.body.value = s.body || ''; els.stat.value = s.stat || ''; els.note.value = s.note || '';
+  }
+  function editable(tag, cls, key, text){
+    const el = document.createElement(tag); el.className = cls; el.contentEditable = 'true'; el.spellcheck = false; el.textContent = text || '';
+    el.addEventListener('input', () => { current()[key] = el.textContent; syncInputsOnly(); renderSlideList(); }); return el;
+  }
+  function syncInputsOnly(){ const s = current(); els.title.value = s.title || ''; els.body.value = s.body || ''; els.stat.value = s.stat || ''; els.note.value = s.note || ''; }
+  function renderStage(){
+    const s = current(); if(!s) return;
+    const key = templateKey(s.type), tpl = state.templates[key];
+    els.stage.className = 'slide-stage' + (state.aspect === '4:3' ? ' ratio-43' : '');
+    els.stage.style.backgroundImage = tpl && tpl.url ? `url("${tpl.url}")` : '';
+    els.stage.innerHTML = '';
+    if(!tpl){ const bg = document.createElement('div'); bg.className = 'slide-bg-fallback ' + fallbackClass(s.type); els.stage.appendChild(bg); }
+    const wrap = document.createElement('div'); wrap.className = 'slide-content ' + s.type + (s.type === 'stat' ? ' layout-stat' : '') + (s.type === 'compare' ? ' layout-compare' : '');
+    if(s.type === 'compare'){
+      wrap.appendChild(editable('div','slide-kicker','stat',s.stat || 'Comparación'));
+      wrap.appendChild(editable('div','slide-title','title',s.title));
+      const grid = document.createElement('div'); grid.className = 'compare-grid';
+      const parts = String(s.body || '').split(/\n---\n|\n\|\n/);
+      const left = parts[0] || 'Antes\nPega aquí el primer bloque.'; const right = parts[1] || 'Después\nPega aquí el segundo bloque.';
+      grid.innerHTML = `<div class="compare-card"><b>Antes</b><div contenteditable="true" data-side="0">${esc(left)}</div></div><div class="compare-card"><b>Después</b><div contenteditable="true" data-side="1">${esc(right)}</div></div>`;
+      grid.querySelectorAll('[data-side]').forEach(node => node.addEventListener('input', () => {
+        const a = grid.querySelector('[data-side="0"]').textContent; const b = grid.querySelector('[data-side="1"]').textContent; current().body = `${a}\n---\n${b}`; syncInputsOnly(); renderSlideList();
+      }));
+      wrap.appendChild(grid); wrap.appendChild(editable('div','slide-note','note',s.note));
+    } else {
+      wrap.appendChild(editable('div','slide-kicker','stat',s.type === 'stat' ? (s.stat || 'Dato clave') : slideLabel(s)));
+      wrap.appendChild(editable('div','slide-title','title',s.title));
+      if(s.type === 'stat') wrap.appendChild(editable('div','slide-stat','stat',s.stat || '67%'));
+      wrap.appendChild(editable('div','slide-body','body',s.body));
+      wrap.appendChild(editable('div','slide-note','note',s.note));
+    }
+    els.stage.appendChild(wrap);
+  }
+  function updateCurrentFromInspector(){
+    const s = current();
+    s.type = els.type.value; s.title = els.title.value; s.body = els.body.value; s.stat = els.stat.value; s.note = els.note.value;
+    renderSlideList();
+    renderStage();
+  }
+  [els.type, els.title, els.body, els.stat, els.note].forEach(el => el.addEventListener('input', updateCurrentFromInspector));
+  els.aspect.addEventListener('change', () => { state.aspect = els.aspect.value; renderStage(); setStatus(`Formato ${state.aspect} seleccionado.`); });
+  document.querySelectorAll('input[type="file"][data-template]').forEach(input => input.addEventListener('change', (ev) => {
+    const file = ev.target.files && ev.target.files[0]; if(!file) return; const key = input.dataset.template; const reader = new FileReader();
+    reader.onload = () => { state.templates[key] = { url: reader.result, name: file.name }; $(`#name-${key}`).textContent = file.name; renderStage(); setStatus(`Fondo ${key} cargado localmente: ${file.name}`); };
+    reader.readAsDataURL(file);
+  }));
+  $('#clearTemplatesBtn').addEventListener('click', () => { state.templates = { cover:null, content:null, close:null }; ['cover','content','close'].forEach(k => $(`#name-${k}`).textContent = 'Sin archivo'); renderStage(); setStatus('Fondos quitados. Usando fondos demo generados por CSS.'); });
+  $('#addSlideBtn').addEventListener('click', () => { state.slides.splice(state.active + 1, 0, { type:'content', title:'Nueva slide', body:'Escribe el contenido aquí.', stat:'', note:'' }); state.active++; renderAll(); setStatus('Slide agregada.'); });
+  $('#deleteSlideBtn').addEventListener('click', () => { if(state.slides.length <= 1){ setStatus('No borro la última slide.'); return; } state.slides.splice(state.active,1); state.active = Math.max(0, state.active - 1); renderAll(); setStatus('Slide eliminada.'); });
+  $('#prevBtn').addEventListener('click', () => { state.active = Math.max(0, state.active - 1); renderAll(); });
+  $('#nextBtn').addEventListener('click', () => { state.active = Math.min(state.slides.length - 1, state.active + 1); renderAll(); });
+  function parseCSV(text){
+    const rows=[]; let row=[], cell='', q=false;
+    for(let i=0;i<text.length;i++){ const ch=text[i], nx=text[i+1]; if(ch==='"' && q && nx==='"'){ cell+='"'; i++; } else if(ch==='"'){ q=!q; } else if(ch===',' && !q){ row.push(cell.trim()); cell=''; } else if((ch==='\n' || ch==='\r') && !q){ if(ch==='\r' && nx==='\n') i++; row.push(cell.trim()); if(row.some(Boolean)) rows.push(row); row=[]; cell=''; } else cell+=ch; }
+    row.push(cell.trim()); if(row.some(Boolean)) rows.push(row); if(!rows.length) return [];
+    const first = rows[0].map(x => x.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''));
+    const header = first.some(x => ['tipo','type','titulo','title','cuerpo','body','dato','stat','nota','note'].includes(x));
+    const keys = header ? first : ['tipo','titulo','cuerpo','dato','nota']; const data = header ? rows.slice(1) : rows;
+    return data.map(r => { const obj={}; keys.forEach((k,i)=>obj[k]=r[i]||''); return { type: cleanType(obj.tipo || obj.type), title: obj.titulo || obj.title || '', body: obj.cuerpo || obj.body || '', stat: obj.dato || obj.stat || '', note: obj.nota || obj.note || '' }; }).filter(s => s.title || s.body || s.stat || s.note);
+  }
+  function cleanType(t){ t = String(t || 'content').toLowerCase().trim(); const map = { portada:'cover', contenido:'content', comparacion:'compare', comparación:'compare', dato:'stat', cierre:'close' }; t = map[t] || t; return ['cover','content','compare','stat','close'].includes(t) ? t : 'content'; }
+  $('#importCsvBtn').addEventListener('click', () => { const slides = parseCSV(els.csv.value); if(!slides.length){ setStatus('CSV vacío o inválido.'); return; } state.slides = slides; state.active = 0; renderAll(); setStatus(`${slides.length} slides importadas desde CSV.`); });
+  function loadImage(url){ return new Promise((resolve,reject) => { const img = new Image(); img.onload = () => resolve(img); img.onerror = reject; img.src = url; }); }
+  function dims(){ return state.aspect === '4:3' ? {w:1500,h:1125} : {w:1920,h:1080}; }
+  function drawFallback(ctx,w,h,type){
+    const g = ctx.createLinearGradient(0,0,w,h); if(type === 'close'){ g.addColorStop(0,'#167557'); g.addColorStop(1,'#0d3f30'); ctx.fillStyle=g; ctx.fillRect(0,0,w,h); return; }
+    ctx.fillStyle='#fffdf6'; ctx.fillRect(0,0,w,h); ctx.fillStyle='#eee9dd'; ctx.fillRect(0,0,w,h); ctx.fillStyle='#fffdf6'; ctx.fillRect(type === 'cover' ? 0 : w*.12,0,type === 'cover'?w*.62:w,h); ctx.fillStyle='#167557'; if(type === 'cover'){ ctx.beginPath(); ctx.moveTo(w*.62,0); ctx.lineTo(w,0); ctx.lineTo(w,h); ctx.lineTo(w*.72,h); ctx.closePath(); ctx.fill(); } else ctx.fillRect(0,0,w*.12,h);
+  }
+  function wrapText(ctx,text,x,y,maxWidth,lineHeight,maxLines){
+    const words = String(text || '').replace(/\r/g,'').split(/\s+/); let line='', lines=[];
+    for(const word of words){ const test = line ? line + ' ' + word : word; if(ctx.measureText(test).width > maxWidth && line){ lines.push(line); line = word; } else line = test; }
+    if(line) lines.push(line); if(maxLines) lines = lines.slice(0,maxLines); lines.forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight)); return y + lines.length*lineHeight;
+  }
+  async function renderSlideToCanvas(index){
+    const slide = state.slides[index], {w,h}=dims(), canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h; const ctx=canvas.getContext('2d');
+    const key = templateKey(slide.type), tpl = state.templates[key];
+    if(tpl && tpl.url){ try{ const img = await loadImage(tpl.url); ctx.drawImage(img,0,0,w,h); } catch{ drawFallback(ctx,w,h,slide.type); } } else drawFallback(ctx,w,h,slide.type);
+    const close = slide.type === 'close'; const x=w*.08, y0=h*.16, max=w*.68; ctx.textBaseline='top'; ctx.fillStyle=close?'rgba(255,255,255,.82)':'#167557'; ctx.font=`900 ${Math.round(w*.022)}px ${getComputedStyle(document.body).fontFamily}`; ctx.fillText(slide.type === 'stat' ? (slide.stat || 'Dato clave') : slideLabel(slide), x, y0);
+    ctx.fillStyle=close?'#fff':'#171817'; ctx.font=`900 ${Math.round(w*(slide.type==='stat'?.045:.055))}px ${getComputedStyle(document.body).fontFamily}`; let y = wrapText(ctx, slide.title, x, y0+h*.075, slide.type==='stat'?w*.52:max, Math.round(w*.058), 3);
+    if(slide.type === 'stat'){ ctx.fillStyle='#167557'; ctx.font=`950 ${Math.round(w*.13)}px ${getComputedStyle(document.body).fontFamily}`; ctx.fillText(slide.stat || '67%', w*.66, h*.32); ctx.fillStyle='#171817'; ctx.font=`500 ${Math.round(w*.027)}px ${getComputedStyle(document.body).fontFamily}`; wrapText(ctx, slide.body, x, y+h*.035, w*.54, Math.round(w*.036), 5); }
+    else if(slide.type === 'compare'){
+      const parts = String(slide.body || '').split(/\n---\n|\n\|\n/); const cardY=y+h*.05, cardW=w*.36, cardH=h*.34; ['Antes','Después'].forEach((label,i)=>{ const cx=x+i*(cardW+w*.035); ctx.fillStyle='rgba(255,255,255,.88)'; roundRect(ctx,cx,cardY,cardW,cardH,w*.018); ctx.fill(); ctx.fillStyle='#171817'; ctx.font=`850 ${Math.round(w*.022)}px ${getComputedStyle(document.body).fontFamily}`; ctx.fillText(label,cx+w*.025,cardY+h*.035); ctx.font=`500 ${Math.round(w*.019)}px ${getComputedStyle(document.body).fontFamily}`; wrapText(ctx, parts[i] || '', cx+w*.025, cardY+h*.095, cardW-w*.05, Math.round(w*.027), 7); });
+    } else { ctx.fillStyle=close?'rgba(255,255,255,.88)':'#3f443f'; ctx.font=`500 ${Math.round(w*.027)}px ${getComputedStyle(document.body).fontFamily}`; wrapText(ctx, slide.body, x, y+h*.04, max, Math.round(w*.036), 7); }
+    if(slide.note){ ctx.fillStyle=close?'rgba(255,255,255,.7)':'#666a64'; ctx.font=`600 ${Math.round(w*.016)}px ${getComputedStyle(document.body).fontFamily}`; wrapText(ctx, slide.note, x, h*.89, w*.72, Math.round(w*.023), 2); }
+    return canvas;
+  }
+  function roundRect(ctx,x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+  async function downloadSlide(index){ const canvas = await renderSlideToCanvas(index); const blob = await new Promise(res => canvas.toBlob(res,'image/png')); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`slideforge-${String(index+1).padStart(2,'0')}.png`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),800); return { width:canvas.width, height:canvas.height, bytes:blob.size }; }
+  $('#exportCurrentBtn').addEventListener('click', async () => { const r = await downloadSlide(state.active); setStatus(`Slide ${state.active+1} exportada: ${r.width}×${r.height}.`); });
+  $('#exportAllBtn').addEventListener('click', async () => { for(let i=0;i<state.slides.length;i++){ await downloadSlide(i); await new Promise(r=>setTimeout(r,220)); } setStatus(`${state.slides.length} slides exportadas.`); });
+  function loadDemo(){
+    state.slides = [
+      {type:'cover',title:'Informe de avance',body:'Presentación institucional generada localmente',stat:'Portada',note:'Cris + Bela · 2026'},
+      {type:'content',title:'Contexto',body:'El equipo necesita producir decks rápidos sin subir documentos sensibles o datos corporativos a plataformas externas.',stat:'01',note:'Plantilla de contenido'},
+      {type:'compare',title:'Flujo de trabajo',body:'Herramientas online\nSuben archivos, rompen privacidad y no respetan plantillas.\n---\nSlideForge\nUsa fondos locales, texto editable y exportación PNG directa.',stat:'02',note:'Comparación operativa'},
+      {type:'stat',title:'Riesgo de fuga',body:'La app no tiene backend ni almacenamiento persistente. El límite de privacidad es el navegador.',stat:'0',note:'Solicitudes de red con contenido del usuario'},
+      {type:'close',title:'Listo para PowerPoint',body:'Exporta PNG y pega cada slide en tu deck final.',stat:'Cierre',note:'Apoyar como siempre'}
+    ]; state.active = 0; renderAll(); setStatus('Demo cargada. Puedes exportar o reemplazar con tu CSV.'); location.hash = '#editor';
+  }
+  $('#loadDemoBtn').addEventListener('click', loadDemo); $('#heroDemoBtn').addEventListener('click', loadDemo);
+  window.slideForgeTest = { state, parseCSV, renderSlideToCanvas, loadDemo, dims };
+  renderAll();
+})();
 </script>
-
 </body>
 </html>

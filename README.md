@@ -1,62 +1,78 @@
 # SlideForge
 
-**Presentaciones profesionales con identidad institucional. 100% local, zero riesgo de fuga.**
+**Editor local para crear slides con identidad institucional y exportarlas como PNG para PowerPoint.**
 
-## Qué es
-
-SlideForge es una app web estática que permite crear presentaciones con tus plantillas institucionales, editar contenido en vivo y exportar como PNG pixel-perfect para pegar en PowerPoint.
-
-**Todo corre en tu navegador.** No hay servidor, no hay base de datos, no hay API. Tus datos nunca salen de tu dispositivo.
-
-## Para quién
-
-- Académicos defendiendo tesis con identidad institucional
-- Profesionales con plantillas corporativas restrictivas
-- Cualquiera que necesite presentar sin subir sus datos a la nube
+SlideForge es una app web estática de un solo archivo. No tiene backend, API, base de datos, analytics ni almacenamiento persistente. Las plantillas y el contenido viven solo en la RAM del navegador.
 
 ## Uso
 
-1. Abre `index.html` en Chrome, Brave o Edge
-2. Sube tus plantillas (portada, contenido, cierre)
-3. Define tus slides con título y contenido
-4. Edita en vivo con el editor visual
-5. Exporta como PNG (4:3 o 16:9)
+1. Abre `index.html` en Chrome, Brave o Edge.
+2. Carga fondos de plantilla para portada, contenido y cierre, o usa la demo.
+3. Crea slides manualmente o importa CSV.
+4. Edita el texto directamente sobre la vista previa.
+5. Exporta la slide actual o todo el deck como PNG.
+6. Pega los PNG en PowerPoint.
 
-## Características
+## CSV
 
-- **Zero backend**: Pyodide corre Python en el navegador para procesamiento de imágenes
-- **Plantillas institucionales**: Sube tus propios fondos, respeta tu marca
-- **Exportación PNG**: 1500×1125px (4:3) o 1920×1080px (16:9), listo para PPT
-- **Edición en vivo**: Contenteditable sobre la diapositiva, sin formularios separados
-- **Múltiples layouts**: Título, contenido, comparación, datos, cierre
+Con encabezado:
 
-## Deploy
+```csv
+tipo,titulo,cuerpo,dato,nota
+cover,Presentación institucional,Resumen ejecutivo,,Equipo 2026
+stat,Cobertura territorial,La muestra cubre 12 zonas,67%,Fuente: demo
+```
 
-No necesitas deploy. Solo abre `index.html` en tu navegador.
+Sin encabezado usa este orden:
 
-Si quieres compartirlo:
-- Sube a GitHub Pages (el código, no los datos)
-- Deploy en Cloudflare Pages
-- O simplemente comparte el archivo HTML
+```csv
+tipo,titulo,cuerpo,dato,nota
+```
 
-## Tech Stack
+Tipos válidos:
 
-- HTML/CSS/JS vanilla
-- Pyodide (Python en el navegador) para procesamiento de imágenes
-- Canvas API para exportación PNG
-- Google Fonts (Inter)
+- `cover`: portada
+- `content`: contenido
+- `compare`: comparación
+- `stat`: dato fuerte
+- `close`: cierre
+
+## Exportación
+
+- 16:9: `1920×1080`
+- 4:3: `1500×1125`
+- Formato: PNG
+- Flujo: `Canvas.toBlob()` → descarga local
 
 ## Privacidad
 
-- **Cero datos salen de tu navegador**
-- No hay analytics, no hay tracking, no hay cookies
-- Las plantillas y contenido se almacenan solo en memoria RAM
-- Al cerrar la pestaña, todo se pierde
+- Cero backend.
+- Cero analytics.
+- Cero cookies.
+- Cero `localStorage` / IndexedDB.
+- Cero subida de archivos.
+- Al cerrar la pestaña, se pierde todo.
 
-## Licencia
+## Tech stack
 
-MIT
+- HTML/CSS/JS vanilla
+- Canvas API
+- FileReader API
+- Contenteditable
+- Sin build step
+
+## Deploy
+
+No necesitas deploy. Puedes abrir `index.html` localmente.
+
+Si quieres compartir el código:
+
+- GitHub Pages
+- Cloudflare Pages
+- Cualquier hosting estático
+
+El código puede ser público; los datos del usuario no se suben nunca.
 
 ## Autor
 
-Creado por Cris + Bela (Hermes Agent)
+Creado por Cris + Bela (Hermes Agent).
